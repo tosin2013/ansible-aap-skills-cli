@@ -33,6 +33,7 @@ The installer auto-detects Claude Code (`~/.claude/`) and Cursor IDE (`~/.cursor
 | `ee-yaml-schema` | `ansible-execution-environment`, `ee_utilities` | Enforces `version: 3` EE manifest schema |
 | `ee-build-workflow` | `ansible-execution-environment` | Makefile targets with `CONTAINER_ENGINE=podman` |
 | `ansible-good-practices` | All repositories | Red Hat CoP Zen of Ansible baseline (always installed) |
+| `aap-live-validation` | `aap_configuration_template`, `infra.aap_configuration` | Platform-aware validation sequence for live AAP servers (OpenShift + standalone) |
 
 ---
 
@@ -118,7 +119,8 @@ ansible-aap-skills-cli/
     ├── aap-infra-roles/
     ├── ee-yaml-schema/
     ├── ee-build-workflow/
-    └── ansible-good-practices/
+    ├── ansible-good-practices/
+    └── aap-live-validation/
 ```
 
 ---
@@ -142,6 +144,9 @@ All architectural decisions are documented as ADRs in [`docs/adrs/`](docs/adrs/)
 - [ADR-007](docs/adrs/007-execution-environment-yaml-schema.md) — EE YAML Schema v3
 - [ADR-008](docs/adrs/008-ee-build-toolchain.md) — EE Build Toolchain
 - [ADR-009](docs/adrs/009-ansible-good-practices.md) — Ansible Good Practices
+- [ADR-010](docs/adrs/010-github-pages-documentation.md) — GitHub Pages Documentation
+- [ADR-011](docs/adrs/011-research-reference-maintenance.md) — Research and Reference Maintenance
+- [ADR-012](docs/adrs/012-aap-live-validation-skill.md) — AAP Live Validation Skill
 
 ---
 

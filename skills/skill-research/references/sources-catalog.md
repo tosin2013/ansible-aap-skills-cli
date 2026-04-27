@@ -19,6 +19,10 @@ any upstream content.
 | `ee-yaml-schema` | https://ansible.readthedocs.io/projects/builder/en/latest/definition/ | EE definition reference, v3 schema | `ansible/ansible-builder` |
 | `ee-build-workflow` | https://github.com/tosin2013/ansible-execution-environment | `Makefile`, `README.md` | `tosin2013/ansible-execution-environment` |
 | `ansible-good-practices` | https://redhat-cop.github.io/automation-good-practices/ | Full guide | `redhat-cop/automation-good-practices` |
+| `aap-live-validation` | https://docs.ansible.com/automation-controller/latest/html/controllerapi/index.html | REST API reference, `/api/v2/ping/`, token endpoints | N/A (official docs) |
+| `aap-live-validation` (navigator) | https://ansible.readthedocs.io/projects/navigator/ | `ansible-navigator run` flags, `--check`, `--mode stdout` | `ansible/ansible-navigator` |
+| `aap-live-validation` (awx collection) | https://github.com/ansible/awx/tree/devel/awx_collection | `awx.awx.controller_meta`, `awx.awx.token` modules | `ansible/awx` |
+| `aap-live-validation` (OCP operator) | https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform | AAP Operator on OpenShift, route/secret layout | N/A (Red Hat docs) |
 | `skill-research` (this repo) | https://github.com/tosin2013/ansible-aap-skills-cli | `skills/`, `docs/adrs/` | `tosin2013/ansible-aap-skills-cli` |
 
 ---
