@@ -1,0 +1,85 @@
+<h1 id="ansible-good-practices">ansible-good-practices</h1>
+
+<p><strong>Target</strong>: All repositories<br />
+<strong>Version</strong>: 1.0.0<br />
+<strong>ADR</strong>: <a href="../adrs/009-ansible-good-practices">ADR-009</a></p>
+
+<h2 id="purpose">Purpose</h2>
+
+<p>A <strong>baseline skill</strong> that is always installed alongside any other skill. Encodes the
+Red Hat Communities of Practice “Zen of Ansible” and role design principles, ensuring
+all AI-generated Ansible code meets community standards regardless of which domain
+skill is active.</p>
+
+<h2 id="the-zen-of-ansible">The Zen of Ansible</h2>
+
+<ol>
+  <li>Simplicity is a feature</li>
+  <li>Idempotency is non-negotiable</li>
+  <li>Modules before shell</li>
+  <li>Declarative over imperative</li>
+  <li>Roles express what, not how</li>
+</ol>
+
+<h2 id="key-rules">Key Rules</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Rule</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Idempotency</td>
+      <td style="text-align: left">Every task safe to run multiple times; <code class="language-plaintext highlighter-rouge">changed=0</code> on second run</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Module priority</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ansible.builtin</code> → <code class="language-plaintext highlighter-rouge">community.general</code> → <code class="language-plaintext highlighter-rouge">command</code> → <code class="language-plaintext highlighter-rouge">shell</code> (last resort)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Variable naming</td>
+      <td style="text-align: left">Prefix all role vars with role name: <code class="language-plaintext highlighter-rouge">aap_config_hostname</code>, not <code class="language-plaintext highlighter-rouge">hostname</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tags on every task</td>
+      <td style="text-align: left">At minimum the role name and resource type</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">FQCN</td>
+      <td style="text-align: left">Always <code class="language-plaintext highlighter-rouge">ansible.builtin.copy</code>, never just <code class="language-plaintext highlighter-rouge">copy</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">No template logic</td>
+      <td style="text-align: left">Jinja2 templates render data; conditionals belong in tasks/vars</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Molecule testing</td>
+      <td style="text-align: left">New roles require a Molecule scenario</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="always-installed">Always Installed</h2>
+
+<p>This skill is automatically installed whenever you run <code class="language-plaintext highlighter-rouge">./install.sh install</code>,
+even if you specify <code class="language-plaintext highlighter-rouge">--skill &lt;other-skill&gt;</code>. You cannot skip it.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Both of these install ansible-good-practices alongside the target skill</span>
+./install.sh <span class="nb">install</span> <span class="nt">--skill</span> aap-config-structure
+./install.sh <span class="nb">install</span>
+</code></pre></div></div>
+
+<h2 id="install">Install</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./install.sh <span class="nb">install</span> <span class="nt">--skill</span> ansible-good-practices
+</code></pre></div></div>
+
+<h2 id="reference-files">Reference Files</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">zen-of-ansible.md</code> — full Red Hat CoP automation good practices summary including variable
+management, error handling, testing, and playbook design principles</li>
+</ul>

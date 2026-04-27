@@ -1,0 +1,173 @@
+<h1 id="skill-research">skill-research</h1>
+
+<p><strong>Target</strong>: <code class="language-plaintext highlighter-rouge">ansible-aap-skills-cli</code> (this repository)<br />
+<strong>Version</strong>: 1.0.0<br />
+<strong>ADR</strong>: <a href="../adrs/011-research-reference-maintenance">ADR-011</a><br />
+<strong>Type</strong>: Contributor meta-skill (opt-in)</p>
+
+<h2 id="purpose">Purpose</h2>
+
+<p>A <strong>contributor meta-skill</strong> that closes the maintenance gap identified in <a href="../adrs/003-documentation-embedding-via-references">ADR-003</a>.
+It gives AI agents a structured workflow for:</p>
+
+<ol>
+  <li>Populating <code class="language-plaintext highlighter-rouge">references/</code> directories with accurate, vendored upstream documentation</li>
+  <li>Detecting stale reference files (flagging content older than 90 days)</li>
+  <li>Filing GitHub issues in upstream repositories when problems are discovered — always with explicit user confirmation</li>
+</ol>
+
+<p>This skill targets <strong>contributors to <code class="language-plaintext highlighter-rouge">ansible-aap-skills-cli</code></strong>, not end users of AAP.</p>
+
+<hr />
+
+<h2 id="key-rules">Key Rules</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Rule</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Source discovery</td>
+      <td style="text-align: left">Always consult <code class="language-plaintext highlighter-rouge">sources-catalog.md</code> for canonical upstream URLs — never guess</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fetch and format</td>
+      <td style="text-align: left">Vendor minimum excerpt only; add <code class="language-plaintext highlighter-rouge">Last updated</code> comment; link to full source</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Staleness detection</td>
+      <td style="text-align: left">Flag files &gt; 90 days old; check upstream commits since last-updated date</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Update workflow</td>
+      <td style="text-align: left">Four steps: check → fetch diff → show diff to user → update on approval</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Issue classification</td>
+      <td style="text-align: left">Classify as documentation bug, schema/API change, or missing documentation</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Issue filing</td>
+      <td style="text-align: left">Draft with user, confirm, then <code class="language-plaintext highlighter-rouge">gh issue create</code> — never auto-file</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Confirmation gate</td>
+      <td style="text-align: left">Never file a GitHub issue without explicit user approval</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="reference-files">Reference Files</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">File</th>
+      <th style="text-align: left">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">references/sources-catalog.md</code></td>
+      <td style="text-align: left">Maps every skill to its authoritative upstream URL and issue repo</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">references/staleness-checklist.md</code></td>
+      <td style="text-align: left">Step-by-step audit procedure for detecting and fixing stale content</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">references/issue-template.md</code></td>
+      <td style="text-align: left">GitHub issue template, pre-flight checklist, and <code class="language-plaintext highlighter-rouge">gh issue create</code> command</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="issue-filing-target-repos">Issue Filing Target Repos</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Skill</th>
+      <th style="text-align: left">Upstream Repo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap-config-structure</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">redhat-cop/aap_configuration_template</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap-secrets-management</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">redhat-cop/aap_configuration_template</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap-infra-roles</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">redhat-cop/infra.aap_configuration</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ee-yaml-schema</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ee-build-workflow</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ansible-good-practices</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">redhat-cop/automation-good-practices</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">skill-research</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">tosin2013/ansible-aap-skills-cli</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="install">Install</h2>
+
+<p>This skill is <strong>opt-in</strong> — it is not part of the auto-install baseline.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./install.sh <span class="nb">install</span> <span class="nt">--skill</span> skill-research
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="typical-workflows">Typical Workflows</h2>
+
+<h3 id="audit-all-references-for-staleness">Audit all references for staleness</h3>
+
+<p>Ask your AI assistant:</p>
+<blockquote>
+  <p>“Audit all references/ directories for staleness and report which files need updating.”</p>
+</blockquote>
+
+<p>The AI will run the checklist in <code class="language-plaintext highlighter-rouge">references/staleness-checklist.md</code> and produce a report
+before touching anything.</p>
+
+<h3 id="update-a-specific-reference-file">Update a specific reference file</h3>
+
+<p>Ask your AI assistant:</p>
+<blockquote>
+  <p>“The ee-yaml-schema skill’s schema-versions.md looks outdated. Can you fetch the latest from upstream and update it?”</p>
+</blockquote>
+
+<p>The AI will fetch from the URL in <code class="language-plaintext highlighter-rouge">sources-catalog.md</code>, show you the diff, and wait for your approval.</p>
+
+<h3 id="file-an-upstream-issue">File an upstream issue</h3>
+
+<p>Ask your AI assistant:</p>
+<blockquote>
+  <p>“I found that the aap-infra-roles async pattern example is broken — the collect_async_status variable name changed. Can you file an issue?”</p>
+</blockquote>
+
+<p>The AI will classify the problem, check for existing issues, draft the issue body, show it to you, and only run <code class="language-plaintext highlighter-rouge">gh issue create</code> after you confirm.</p>

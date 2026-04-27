@@ -1,0 +1,60 @@
+<h1 id="1-skill-format-standard">1. Skill Format Standard</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: AI Agent Integration</p>
+
+<h2 id="context">Context</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ansible-aap-skills-cli</code> repository delivers domain-specific context to AI coding assistants (Claude Code and Cursor IDE). A portable, human-readable, and tooling-agnostic format is needed so that skills can be read, maintained, and extended without coupling to any single AI platform’s proprietary format.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">rhel-devops-skills-cli</code> reference architecture established the <code class="language-plaintext highlighter-rouge">SKILL.md</code> open standard as its skill format, demonstrating viability across Claude Code and Cursor IDE environments.</p>
+
+<h2 id="decision">Decision</h2>
+
+<p>All skills in this repository will use the <strong><code class="language-plaintext highlighter-rouge">SKILL.md</code> open standard</strong> as the canonical format for expressing agent skill instructions.</p>
+
+<p>Each skill is expressed as a single Markdown file named <code class="language-plaintext highlighter-rouge">SKILL.md</code>, containing:</p>
+<ul>
+  <li>A brief description of the skill’s purpose</li>
+  <li>Specific instructions the AI agent must follow</li>
+  <li>Context about the target repository/ecosystem</li>
+</ul>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li>Skills are human-readable and version-controllable in plain text</li>
+  <li>Compatible with both Claude Code and Cursor IDE without format translation</li>
+  <li>Low barrier to contribution — any editor can modify a Markdown file</li>
+  <li>Future AI platforms can adopt the same standard without restructuring</li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>The standard is informal; there is no schema validation or linting toolchain</li>
+  <li>Large skills may become verbose; contributors must self-discipline on scope</li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>Create a <code class="language-plaintext highlighter-rouge">SKILL.md</code> at the root of each skill directory (e.g., <code class="language-plaintext highlighter-rouge">skills/aap-config-structure/SKILL.md</code>)</li>
+  <li>Use a consistent heading structure: purpose, key rules, examples</li>
+  <li>Enforce this format in code review; the <code class="language-plaintext highlighter-rouge">install.sh verify</code> command will check for <code class="language-plaintext highlighter-rouge">SKILL.md</code> presence</li>
+</ol>
+
+<h2 id="related-prd-sections">Related PRD Sections</h2>
+
+<ul>
+  <li>Section 2.2: Skill Format (ADR-001)</li>
+  <li>Section 5: File Structure</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">tosin2013/rhel-devops-skills-cli</code> — reference implementation</li>
+  <li>SKILL.md open standard conventions</li>
+</ul>

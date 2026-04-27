@@ -1,0 +1,103 @@
+<h1 id="architecture-decision-records">Architecture Decision Records</h1>
+
+<p>All architectural decisions for <code class="language-plaintext highlighter-rouge">ansible-aap-skills-cli</code> are documented here using the
+<a href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions">Nygard ADR format</a>.</p>
+
+<p>ADRs capture the context, decision, and consequences of each significant choice — providing
+a permanent record of <em>why</em> the project is built the way it is.</p>
+
+<hr />
+
+<h2 id="adr-index">ADR Index</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">#</th>
+      <th style="text-align: left">Title</th>
+      <th style="text-align: left">Status</th>
+      <th style="text-align: left">Domain</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><a href="001-skill-format-standard">ADR-001</a></td>
+      <td style="text-align: left">Skill Format Standard</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">AI Agent Integration</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="002-target-ai-assistants">ADR-002</a></td>
+      <td style="text-align: left">Target AI Assistants</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">AI Agent Integration</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="003-documentation-embedding-via-references">ADR-003</a></td>
+      <td style="text-align: left">Documentation Embedding via References</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">Knowledge Management</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="004-shell-based-cli-installer">ADR-004</a></td>
+      <td style="text-align: left">Shell-Based CLI Installer</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">Distribution</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="005-repository-structure">ADR-005</a></td>
+      <td style="text-align: left">Repository Structure</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">Project Organization</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="006-secrets-management">ADR-006</a></td>
+      <td style="text-align: left">Secrets Management</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">Security</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="007-execution-environment-yaml-schema">ADR-007</a></td>
+      <td style="text-align: left">EE YAML Schema Version</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">Build Toolchain</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="008-ee-build-toolchain">ADR-008</a></td>
+      <td style="text-align: left">EE Build Toolchain</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">Build Toolchain</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="009-ansible-good-practices">ADR-009</a></td>
+      <td style="text-align: left">Ansible Good Practices Baseline</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">Engineering Standards</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="010-github-pages-documentation">ADR-010</a></td>
+      <td style="text-align: left">GitHub Pages Documentation Site</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">Documentation</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="011-research-reference-maintenance">ADR-011</a></td>
+      <td style="text-align: left">Research and Reference Maintenance</td>
+      <td style="text-align: left">Accepted</td>
+      <td style="text-align: left">Knowledge Management</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="about-adrs">About ADRs</h2>
+
+<p>Each ADR follows this structure:</p>
+
+<ul>
+  <li><strong>Context</strong> — the problem or situation that required a decision</li>
+  <li><strong>Decision</strong> — what was decided and why</li>
+  <li><strong>Consequences</strong> — positive and negative outcomes of the decision</li>
+  <li><strong>Implementation Plan</strong> — concrete steps to realise the decision</li>
+</ul>

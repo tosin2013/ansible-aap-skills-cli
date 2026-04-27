@@ -1,0 +1,97 @@
+<h1 id="4-shell-based-cli-installer">4. Shell-Based CLI Installer</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: Distribution / Developer Experience</p>
+
+<h2 id="context">Context</h2>
+
+<p>Skills need to be distributed to end-user machines with minimal friction. Options considered:</p>
+
+<ol>
+  <li><strong>Manual copy</strong> — users clone the repo and copy files themselves</li>
+  <li><strong>Package manager</strong> (e.g., pip, npm, Homebrew) — requires packaging infrastructure and platform-specific maintenance</li>
+  <li><strong>Bash script installer</strong> — a single <code class="language-plaintext highlighter-rouge">install.sh</code> that handles copy, update, verification, and listing</li>
+</ol>
+
+<p>The target audience (Ansible/Red Hat CoP engineers) is comfortable with shell scripting and <code class="language-plaintext highlighter-rouge">curl | bash</code> style installers. The reference project <code class="language-plaintext highlighter-rouge">rhel-devops-skills-cli</code> validated this approach successfully.</p>
+
+<h2 id="decision">Decision</h2>
+
+<p>The primary delivery mechanism will be a <strong>Bash script (<code class="language-plaintext highlighter-rouge">install.sh</code>)</strong> that supports the following sub-commands:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">install</code></td>
+      <td>Copy one or all skills to the target IDE path(s)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">update</code></td>
+      <td>Re-copy skills to pick up upstream changes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">verify</code></td>
+      <td>Check that installed skills match the source (checksum or presence check)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">list</code></td>
+      <td>Print all available skills and their installation status</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The script will accept:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--skill &lt;name&gt;</code> — target a specific skill</li>
+  <li><code class="language-plaintext highlighter-rouge">--ide &lt;claude\|cursor\|all&gt;</code> — target a specific platform (default: <code class="language-plaintext highlighter-rouge">all</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">--dry-run</code> — preview actions without making changes</li>
+</ul>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li>Zero runtime dependencies beyond Bash and coreutils</li>
+  <li>Works in any POSIX environment (Linux, macOS, WSL)</li>
+  <li>Simple mental model: one script, a few sub-commands</li>
+  <li>Easy to test with Bash testing frameworks (e.g., bats)</li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>Windows native (non-WSL) users are not supported</li>
+  <li>Script complexity grows as features are added; requires disciplined modularization</li>
+  <li>No dependency resolution — skills are self-contained by design</li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>Port the <code class="language-plaintext highlighter-rouge">install.sh</code> framework from <code class="language-plaintext highlighter-rouge">rhel-devops-skills-cli</code></li>
+  <li>Refactor for Ansible-specific skill paths and naming conventions</li>
+  <li>Implement <code class="language-plaintext highlighter-rouge">detect_ides()</code>, <code class="language-plaintext highlighter-rouge">install_skill()</code>, <code class="language-plaintext highlighter-rouge">update_skill()</code>, <code class="language-plaintext highlighter-rouge">verify_skill()</code>, <code class="language-plaintext highlighter-rouge">list_skills()</code> as discrete functions</li>
+  <li>Add a <code class="language-plaintext highlighter-rouge">--help</code> flag with usage examples</li>
+  <li>Write bats tests covering each sub-command in <code class="language-plaintext highlighter-rouge">tests/</code></li>
+</ol>
+
+<h2 id="related-prd-sections">Related PRD Sections</h2>
+
+<ul>
+  <li>Section 2.3: Shell Installer (ADR-006)</li>
+  <li>Section 4: Detailed Skill Requirements (install by <code class="language-plaintext highlighter-rouge">--skill &lt;name&gt;</code>)</li>
+  <li>Section 6 Phase 1: CLI Scaffolding</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">tosin2013/rhel-devops-skills-cli</code> — <code class="language-plaintext highlighter-rouge">install.sh</code> reference implementation</li>
+  <li>bats-core: Bash Automated Testing System — https://github.com/bats-core/bats-core</li>
+</ul>

@@ -1,0 +1,64 @@
+<h1 id="3-documentation-embedding-via-references-subdirectory">3. Documentation Embedding via References Subdirectory</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: AI Agent Integration / Knowledge Management</p>
+
+<h2 id="context">Context</h2>
+
+<p>AI agents benefit from supplementary documentation (example YAML structures, upstream README excerpts, schema references) to provide accurate, context-aware suggestions. However, embedding all of this documentation directly inside a <code class="language-plaintext highlighter-rouge">SKILL.md</code> file would make skills unwieldy, hard to update, and difficult to review.</p>
+
+<p>A mechanism is needed to keep the primary <code class="language-plaintext highlighter-rouge">SKILL.md</code> concise while still making supplementary material accessible to the AI at runtime.</p>
+
+<h2 id="decision">Decision</h2>
+
+<p>Each skill directory will include an optional <strong><code class="language-plaintext highlighter-rouge">references/</code></strong> subdirectory for supplementary documentation. The <code class="language-plaintext highlighter-rouge">SKILL.md</code> may reference files in <code class="language-plaintext highlighter-rouge">references/</code> by relative path so the AI can read them on demand.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>skills/&lt;skill-name&gt;/
+├── SKILL.md          # Primary instructions (concise)
+├── config.sh         # Skill metadata for the installer
+└── references/       # Supplementary docs (optional)
+    ├── example.yml
+    └── schema.md
+</code></pre></div></div>
+
+<p>The installer copies the entire skill directory (including <code class="language-plaintext highlighter-rouge">references/</code>) to the target IDE path.</p>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SKILL.md</code> remains readable and concise</li>
+  <li>Reference material can be updated independently of the core instructions</li>
+  <li>Upstream documentation can be vendored per-skill without polluting the repository root</li>
+  <li>AI agents that support file-reading can access deep context without token bloat in the main skill file</li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>Contributors must remember to update <code class="language-plaintext highlighter-rouge">references/</code> when upstream schemas change</li>
+  <li>Skills with large reference trees may increase installer copy time marginally</li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>Define the <code class="language-plaintext highlighter-rouge">references/</code> convention in <code class="language-plaintext highlighter-rouge">CONTRIBUTING.md</code></li>
+  <li>Update <code class="language-plaintext highlighter-rouge">install.sh install</code> to copy entire skill directory recursively (<code class="language-plaintext highlighter-rouge">cp -r</code>)</li>
+  <li>In each <code class="language-plaintext highlighter-rouge">SKILL.md</code>, add a <code class="language-plaintext highlighter-rouge">## References</code> section citing relative paths to key files in <code class="language-plaintext highlighter-rouge">references/</code></li>
+  <li>For the initial skill set, vendor the most critical upstream docs (e.g., <code class="language-plaintext highlighter-rouge">aap_configuration_template</code> directory layout, EE schema <code class="language-plaintext highlighter-rouge">v3</code> spec)</li>
+</ol>
+
+<h2 id="related-prd-sections">Related PRD Sections</h2>
+
+<ul>
+  <li>Section 2.2: Skill Format (ADR-003)</li>
+  <li>Section 5: File Structure</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">tosin2013/rhel-devops-skills-cli</code> — established the <code class="language-plaintext highlighter-rouge">references/</code> convention</li>
+  <li>Red Hat CoP AAP configuration documentation</li>
+</ul>

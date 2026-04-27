@@ -1,0 +1,171 @@
+<h1 id="installation--cli-reference">Installation &amp; CLI Reference</h1>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Bash 4.0+</li>
+  <li>Claude Code and/or Cursor IDE installed on your machine</li>
+</ul>
+
+<h2 id="clone-the-repository">Clone the Repository</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/tosin2013/ansible-aap-skills-cli.git
+<span class="nb">cd </span>ansible-aap-skills-cli
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="commands">Commands</h2>
+
+<h3 id="install"><code class="language-plaintext highlighter-rouge">install</code></h3>
+
+<p>Copy skills to all detected IDEs, or target a specific skill or IDE.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Install all skills to all detected IDEs</span>
+./install.sh <span class="nb">install</span>
+
+<span class="c"># Install a specific skill</span>
+./install.sh <span class="nb">install</span> <span class="nt">--skill</span> aap-config-structure
+
+<span class="c"># Install to a specific IDE only</span>
+./install.sh <span class="nb">install</span> <span class="nt">--ide</span> cursor
+./install.sh <span class="nb">install</span> <span class="nt">--ide</span> claude
+
+<span class="c"># Combine — one skill, one IDE</span>
+./install.sh <span class="nb">install</span> <span class="nt">--skill</span> ee-yaml-schema <span class="nt">--ide</span> cursor
+
+<span class="c"># Preview without writing any files</span>
+./install.sh <span class="nb">install</span> <span class="nt">--dry-run</span>
+./install.sh <span class="nb">install</span> <span class="nt">--skill</span> aap-infra-roles <span class="nt">--ide</span> claude <span class="nt">--dry-run</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">ansible-good-practices</code> baseline skill is <strong>always installed</strong> alongside any other skill.</p>
+
+<hr />
+
+<h3 id="update"><code class="language-plaintext highlighter-rouge">update</code></h3>
+
+<p>Re-copy skills, overwriting existing installations to pick up upstream changes.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Update all skills</span>
+./install.sh update
+
+<span class="c"># Update a specific skill</span>
+./install.sh update <span class="nt">--skill</span> ee-build-workflow
+
+<span class="c"># Update for a specific IDE</span>
+./install.sh update <span class="nt">--ide</span> cursor
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="verify"><code class="language-plaintext highlighter-rouge">verify</code></h3>
+
+<p>Check that installed skills are present and intact (SKILL.md exists in the target path).</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Verify all skills across all detected IDEs</span>
+./install.sh verify
+
+<span class="c"># Verify a specific skill</span>
+./install.sh verify <span class="nt">--skill</span> aap-config-structure <span class="nt">--ide</span> cursor
+</code></pre></div></div>
+
+<p>Exits <code class="language-plaintext highlighter-rouge">0</code> if all checks pass, <code class="language-plaintext highlighter-rouge">1</code> if any skill is missing or invalid.</p>
+
+<hr />
+
+<h3 id="list"><code class="language-plaintext highlighter-rouge">list</code></h3>
+
+<p>Print all available skills and their current installation status.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./install.sh list
+</code></pre></div></div>
+
+<p>Example output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SKILL                          VERSION    IDE        STATUS
+-----                          -------    ---        ------
+aap-config-structure           1.0.0      claude     installed
+aap-config-structure           1.0.0      cursor     not installed
+aap-secrets-management         1.0.0      claude     installed
+aap-secrets-management         1.0.0      cursor     not installed
+...
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="installation-paths">Installation Paths</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">IDE</th>
+      <th style="text-align: left">Skills installed to</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Claude Code</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">~/.claude/skills/&lt;skill-name&gt;/</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Cursor IDE</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">~/.cursor/skills/&lt;skill-name&gt;/</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="flags-reference">Flags Reference</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Flag</th>
+      <th style="text-align: left">Values</th>
+      <th style="text-align: left">Default</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">--skill</code></td>
+      <td style="text-align: left">skill name</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">all</code></td>
+      <td style="text-align: left">Target a specific skill</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">--ide</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">claude</code>, <code class="language-plaintext highlighter-rouge">cursor</code>, <code class="language-plaintext highlighter-rouge">all</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">all</code></td>
+      <td style="text-align: left">Target a specific IDE</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">--dry-run</code></td>
+      <td style="text-align: left">—</td>
+      <td style="text-align: left">off</td>
+      <td style="text-align: left">Preview actions without writing files</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">--help</code></td>
+      <td style="text-align: left">—</td>
+      <td style="text-align: left">—</td>
+      <td style="text-align: left">Print usage</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="local-preview-optional">Local Preview (optional)</h2>
+
+<p>To preview the documentation site locally:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>docs
+gem <span class="nb">install </span>bundler
+bundle <span class="nb">install
+</span>bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div></div>
+
+<p>Then open <code class="language-plaintext highlighter-rouge">http://localhost:4000/ansible-aap-skills-cli</code>.</p>

@@ -1,0 +1,73 @@
+<h1 id="aap-infra-roles">aap-infra-roles</h1>
+
+<p><strong>Target</strong>: <code class="language-plaintext highlighter-rouge">redhat-cop/infra.aap_configuration</code><br />
+<strong>Version</strong>: 1.0.0<br />
+<strong>ADR</strong>: <a href="../adrs/001-skill-format-standard">ADR-001</a></p>
+
+<h2 id="purpose">Purpose</h2>
+
+<p>Teaches AI agents the async task pattern used in <code class="language-plaintext highlighter-rouge">infra.aap_configuration</code> and enforces
+the correct variable naming conventions (<code class="language-plaintext highlighter-rouge">aap_</code> prefix) to avoid namespace collisions.</p>
+
+<h2 id="key-rules">Key Rules</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Rule</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap_</code> prefix</td>
+      <td style="text-align: left">All connection variables: <code class="language-plaintext highlighter-rouge">aap_hostname</code>, <code class="language-plaintext highlighter-rouge">aap_token</code>, <code class="language-plaintext highlighter-rouge">aap_validate_certs</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Async tasks</td>
+      <td style="text-align: left">Use <code class="language-plaintext highlighter-rouge">async: 3600</code> + <code class="language-plaintext highlighter-rouge">poll: 0</code> for all resource-configuring roles</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">collect_async_status</code></td>
+      <td style="text-align: left">Always follow async tasks with the <code class="language-plaintext highlighter-rouge">collect_async_status</code> role</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Dependency order</td>
+      <td style="text-align: left">Organizations → Credential types → Credentials → Projects → Inventories → Templates</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Pass vars explicitly</td>
+      <td style="text-align: left">Always pass <code class="language-plaintext highlighter-rouge">aap_hostname</code>, <code class="language-plaintext highlighter-rouge">aap_token</code>, <code class="language-plaintext highlighter-rouge">aap_validate_certs</code> to every role call</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="async-pattern">Async Pattern</h2>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Configure organizations</span>
+  <span class="na">ansible.builtin.include_role</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">infra.aap_configuration.organizations</span>
+  <span class="na">vars</span><span class="pi">:</span>
+    <span class="na">aap_hostname</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+    <span class="na">aap_token</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+  <span class="na">async</span><span class="pi">:</span> <span class="m">3600</span>
+  <span class="na">poll</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="na">register</span><span class="pi">:</span> <span class="s">organizations_async</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Wait for organizations</span>
+  <span class="na">ansible.builtin.include_role</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">infra.aap_configuration.collect_async_status</span>
+  <span class="na">vars</span><span class="pi">:</span>
+    <span class="na">async_results</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+</code></pre></div></div>
+
+<h2 id="install">Install</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./install.sh <span class="nb">install</span> <span class="nt">--skill</span> aap-infra-roles
+</code></pre></div></div>
+
+<h2 id="reference-files">Reference Files</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">async-pattern.yml</code> — complete multi-resource async configuration playbook</li>
+</ul>

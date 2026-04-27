@@ -1,0 +1,108 @@
+<h1 id="10-github-pages-documentation-site">10. GitHub Pages Documentation Site</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: Documentation / Developer Experience</p>
+
+<h2 id="context">Context</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ansible-aap-skills-cli</code> repository ships 9 ADRs, 6 skills with detailed SKILL.md files and references, a full CLI reference in README.md, and a CONTRIBUTING guide. This content is valuable but only accessible as raw Markdown on GitHub — difficult to navigate, unsearchable, and not indexed by search engines.</p>
+
+<p>Reference projects in the target ecosystem publish browsable documentation sites:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">redhat-cop.github.io/aap_config_as_code_docs/</code></li>
+  <li><code class="language-plaintext highlighter-rouge">redhat-cop.github.io/automation-good-practices/</code></li>
+</ul>
+
+<p>Aligning with this convention increases credibility and discoverability within the Red Hat CoP community.</p>
+
+<p>Options considered:</p>
+
+<ol>
+  <li><strong>No docs site</strong> — keep everything as Markdown on GitHub only</li>
+  <li><strong>ReadTheDocs</strong> — requires an external account and YAML config; adds friction</li>
+  <li><strong>GitHub Pages + Jekyll</strong> — co-located with source, free, no external accounts, consistent with Red Hat CoP projects</li>
+  <li><strong>GitHub Pages + MkDocs Material</strong> — popular Python-based alternative; requires pip toolchain</li>
+  <li><strong>GitHub Pages + plain HTML</strong> — maximum control, maximum maintenance burden</li>
+</ol>
+
+<h2 id="decision">Decision</h2>
+
+<p>Publish a <strong>GitHub Pages site</strong> using <strong>Jekyll with the <code class="language-plaintext highlighter-rouge">just-the-docs</code> theme</strong>, built automatically by GitHub Actions on every push to <code class="language-plaintext highlighter-rouge">main</code> that touches <code class="language-plaintext highlighter-rouge">docs/</code>.</p>
+
+<p>Rationale for each choice:</p>
+
+<ul>
+  <li><strong>GitHub Pages</strong>: free, co-located with source, no external accounts, direct integration with GitHub Actions <code class="language-plaintext highlighter-rouge">GITHUB_TOKEN</code></li>
+  <li><strong>Jekyll</strong>: GitHub Pages has native Jekyll support; no additional build infrastructure needed beyond a <code class="language-plaintext highlighter-rouge">Gemfile</code></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">just-the-docs</code> theme</strong>: used by other Red Hat CoP documentation sites; provides built-in full-text search, responsive navigation, and a clean minimal design appropriate for technical documentation</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">docs/</code> directory on <code class="language-plaintext highlighter-rouge">main</code></strong> (not a separate <code class="language-plaintext highlighter-rouge">gh-pages</code> branch): ADR Markdown files live alongside the site config, making it easy to update docs and ADRs in the same commit; the Actions workflow builds and pushes the rendered HTML to a <code class="language-plaintext highlighter-rouge">gh-pages</code> branch</li>
+</ul>
+
+<h2 id="site-structure">Site Structure</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docs/
+├── _config.yml              # Jekyll configuration
+├── Gemfile                  # just-the-docs gem dependency
+├── index.md                 # Landing page
+├── installation.md          # install.sh command reference
+├── skills/
+│   ├── index.md             # Skills overview table
+│   ├── aap-config-structure.md
+│   ├── aap-secrets-management.md
+│   ├── aap-infra-roles.md
+│   ├── ee-yaml-schema.md
+│   ├── ee-build-workflow.md
+│   └── ansible-good-practices.md
+└── adrs/
+    ├── index.md             # ADR index (links to all 10 ADRs)
+    ├── 001-skill-format-standard.md
+    └── ...                  # existing ADR files rendered as-is
+</code></pre></div></div>
+
+<p>Published URL: <code class="language-plaintext highlighter-rouge">https://tosin2013.github.io/ansible-aap-skills-cli</code></p>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li>All project documentation is web-browsable and full-text searchable</li>
+  <li>Consistent with Red Hat CoP documentation conventions</li>
+  <li>Automatically published on every relevant push — no manual deploy step</li>
+  <li>ADRs and skill descriptions gain SEO visibility for Ansible AAP engineers</li>
+  <li>Zero external accounts or paid services required</li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>Adds Ruby/Bundler as a dev toolchain dependency (only required for local preview)</li>
+  <li><code class="language-plaintext highlighter-rouge">docs/</code> directory now serves a dual purpose (ADRs + Jekyll site source); contributors must be aware of Jekyll front matter requirements</li>
+  <li>GitHub Pages has bandwidth limits (100 GB/month softcap) — acceptable for a developer tool project</li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>Add <code class="language-plaintext highlighter-rouge">docs/adrs/010-github-pages-documentation.md</code> (this file)</li>
+  <li>Create <code class="language-plaintext highlighter-rouge">docs/_config.yml</code> with <code class="language-plaintext highlighter-rouge">just-the-docs</code> theme configuration</li>
+  <li>Create <code class="language-plaintext highlighter-rouge">docs/Gemfile</code> with the <code class="language-plaintext highlighter-rouge">just-the-docs</code> gem</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">docs/.gitignore</code> to exclude Jekyll build artifacts (<code class="language-plaintext highlighter-rouge">_site/</code>, <code class="language-plaintext highlighter-rouge">.jekyll-cache/</code>)</li>
+  <li>Write <code class="language-plaintext highlighter-rouge">docs/index.md</code>, <code class="language-plaintext highlighter-rouge">docs/installation.md</code>, <code class="language-plaintext highlighter-rouge">docs/skills/</code>, <code class="language-plaintext highlighter-rouge">docs/adrs/index.md</code></li>
+  <li>Create <code class="language-plaintext highlighter-rouge">.github/workflows/docs.yml</code> to build and publish on push to <code class="language-plaintext highlighter-rouge">main</code></li>
+  <li>Enable GitHub Pages in repository settings (source: <code class="language-plaintext highlighter-rouge">gh-pages</code> branch)</li>
+</ol>
+
+<h2 id="related-adrs">Related ADRs</h2>
+
+<ul>
+  <li><a href="005-repository-structure.md">ADR-005</a> — <code class="language-plaintext highlighter-rouge">docs/</code> directory is part of the canonical repository structure</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>just-the-docs theme: https://just-the-docs.github.io/just-the-docs/</li>
+  <li>GitHub Pages documentation: https://docs.github.com/en/pages</li>
+  <li>peaceiris/actions-gh-pages: https://github.com/peaceiris/actions-gh-pages</li>
+  <li>Red Hat CoP AAP config as code docs: https://redhat-cop.github.io/aap_config_as_code_docs/</li>
+</ul>

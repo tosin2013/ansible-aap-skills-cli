@@ -1,0 +1,70 @@
+<h1 id="2-target-ai-assistants">2. Target AI Assistants</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: AI Agent Integration</p>
+
+<h2 id="context">Context</h2>
+
+<p>Two AI coding assistants are in active use within the target engineering community: <strong>Claude Code</strong> and <strong>Cursor IDE</strong>. Each platform loads agent skills from a different filesystem path:</p>
+
+<ul>
+  <li>Claude Code reads skills from <code class="language-plaintext highlighter-rouge">~/.claude/skills/</code></li>
+  <li>Cursor IDE reads skills from <code class="language-plaintext highlighter-rouge">~/.cursor/skills/</code></li>
+</ul>
+
+<p>The installer must handle both platforms without requiring users to understand the internal path differences, while also supporting environments where only one platform is installed.</p>
+
+<h2 id="decision">Decision</h2>
+
+<p>The CLI installer (<code class="language-plaintext highlighter-rouge">install.sh</code>) will <strong>support both Claude Code and Cursor IDE</strong> as first-class targets with the following behaviour:</p>
+
+<ol>
+  <li><strong>Auto-detection</strong>: On invocation, <code class="language-plaintext highlighter-rouge">install.sh</code> probes for both platforms and installs to all detected paths.</li>
+  <li><strong>Explicit targeting</strong>: Users may pass <code class="language-plaintext highlighter-rouge">--ide claude</code> or <code class="language-plaintext highlighter-rouge">--ide cursor</code> to restrict installation to a single platform.</li>
+  <li><strong>Installation paths</strong>:
+    <ul>
+      <li>Claude Code → <code class="language-plaintext highlighter-rouge">~/.claude/skills/&lt;skill-name&gt;/</code></li>
+      <li>Cursor IDE → <code class="language-plaintext highlighter-rouge">~/.cursor/skills/&lt;skill-name&gt;/</code></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li>Zero-configuration experience for users who have both platforms installed</li>
+  <li>Explicit targeting flag provides flexibility for CI or single-platform environments</li>
+  <li>Mirrors the proven approach from <code class="language-plaintext highlighter-rouge">rhel-devops-skills-cli</code></li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>Two installation targets doubles the surface area for path-related bugs</li>
+  <li>Future platforms require additions to the detection logic in <code class="language-plaintext highlighter-rouge">install.sh</code></li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>In <code class="language-plaintext highlighter-rouge">install.sh</code>, implement <code class="language-plaintext highlighter-rouge">detect_ides()</code> that checks for <code class="language-plaintext highlighter-rouge">~/.claude/</code> and <code class="language-plaintext highlighter-rouge">~/.cursor/</code></li>
+  <li>Implement <code class="language-plaintext highlighter-rouge">install_skill()</code> with a loop over detected (or specified) IDE paths</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">--ide</code> flag parsing to the CLI argument handler</li>
+  <li>Document supported platforms in <code class="language-plaintext highlighter-rouge">README.md</code></li>
+</ol>
+
+<h2 id="related-prd-sections">Related PRD Sections</h2>
+
+<ul>
+  <li>Section 2.1: Supported AI Assistants (ADR-002)</li>
+  <li>Section 6 Phase 1: CLI Scaffolding</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>Claude Code skill directory convention: <code class="language-plaintext highlighter-rouge">~/.claude/skills/</code></li>
+  <li>Cursor IDE skill directory convention: <code class="language-plaintext highlighter-rouge">~/.cursor/skills/</code></li>
+  <li><code class="language-plaintext highlighter-rouge">tosin2013/rhel-devops-skills-cli</code> — reference implementation of dual-platform detection</li>
+</ul>

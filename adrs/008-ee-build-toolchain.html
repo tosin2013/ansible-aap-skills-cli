@@ -1,0 +1,89 @@
+<h1 id="8-execution-environment-build-toolchain">8. Execution Environment Build Toolchain</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: Ansible Execution Environment / Build Toolchain</p>
+
+<h2 id="context">Context</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code> repository uses a <code class="language-plaintext highlighter-rouge">Makefile</code> to abstract the <code class="language-plaintext highlighter-rouge">ansible-builder</code> invocation. Engineers and AI agents assisting with this repository must use the Makefile targets rather than calling <code class="language-plaintext highlighter-rouge">ansible-builder</code> directly, because the Makefile encodes environment-specific flags and container engine configuration.</p>
+
+<p>The target environment uses <strong>Podman</strong> (not Docker) as the container engine, which requires an explicit flag when invoking <code class="language-plaintext highlighter-rouge">ansible-builder</code>.</p>
+
+<h2 id="decision">Decision</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ee-build-workflow</code> skill will instruct AI agents to:</p>
+
+<ol>
+  <li>Use <strong>Makefile targets</strong> for all build operations — never invoke <code class="language-plaintext highlighter-rouge">ansible-builder</code> directly</li>
+  <li>Always pass <code class="language-plaintext highlighter-rouge">CONTAINER_ENGINE=podman</code> when executing make targets</li>
+  <li>Use the following canonical targets:</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th>Target</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">make build</code></td>
+      <td>Build the execution environment image</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">make test</code></td>
+      <td>Run sanity/integration tests against the built image</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">make push</code></td>
+      <td>Tag and push the image to the registry</td>
+    </tr>
+  </tbody>
+</table>
+
+<ol>
+  <li>When suggesting build commands, always use the form:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CONTAINER_ENGINE</span><span class="o">=</span>podman make build
+</code></pre></div>    </div>
+  </li>
+  <li>Do <strong>not</strong> suggest <code class="language-plaintext highlighter-rouge">docker build</code> or direct <code class="language-plaintext highlighter-rouge">ansible-builder build</code> invocations</li>
+</ol>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li>AI-generated commands are immediately runnable in the target environment (Podman)</li>
+  <li>Makefile abstraction means build logic changes do not require skill updates</li>
+  <li>Consistent with how the repository’s CI/CD pipeline invokes builds</li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>If the Makefile is restructured (targets renamed), the skill must be updated</li>
+  <li>Agents unaware of <code class="language-plaintext highlighter-rouge">CONTAINER_ENGINE</code> may suggest Docker-only commands on Podman systems</li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>Write <code class="language-plaintext highlighter-rouge">skills/ee-build-workflow/SKILL.md</code> encoding the rules above</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">references/Makefile.excerpt</code> showing the relevant build targets and their implementations</li>
+  <li>Add a note in <code class="language-plaintext highlighter-rouge">SKILL.md</code> explaining why <code class="language-plaintext highlighter-rouge">CONTAINER_ENGINE=podman</code> is required (rootless containers in RHEL/Fedora environments)</li>
+</ol>
+
+<h2 id="related-prd-sections">Related PRD Sections</h2>
+
+<ul>
+  <li>Section 4: Detailed Skill Requirements (<code class="language-plaintext highlighter-rouge">ee-build-workflow</code> row)</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code>: https://github.com/tosin2013/ansible-execution-environment</li>
+  <li>Podman documentation: https://docs.podman.io/</li>
+  <li>ansible-builder documentation: https://ansible.readthedocs.io/projects/builder/</li>
+</ul>

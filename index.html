@@ -1,0 +1,99 @@
+<h1 id="ansible-aap-skills-cli">ansible-aap-skills-cli</h1>
+
+<p>A CLI installer that delivers <strong>AI agent skills</strong> for the Red Hat Communities of Practice Ansible AAP ecosystem.</p>
+
+<p>Skills use the <a href="https://github.com/tosin2013/rhel-devops-skills-cli"><code class="language-plaintext highlighter-rouge">SKILL.md</code></a> open standard and work with both <strong>Claude Code</strong> and <strong>Cursor IDE</strong>, giving your AI assistant deep, domain-specific context for repositories like <code class="language-plaintext highlighter-rouge">aap_configuration_template</code>, <code class="language-plaintext highlighter-rouge">infra.aap_configuration</code>, and <code class="language-plaintext highlighter-rouge">ansible-execution-environment</code>.</p>
+
+<hr />
+
+<h2 id="quick-start">Quick Start</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/tosin2013/ansible-aap-skills-cli.git
+<span class="nb">cd </span>ansible-aap-skills-cli
+./install.sh <span class="nb">install</span>
+</code></pre></div></div>
+
+<p>The installer auto-detects Claude Code (<code class="language-plaintext highlighter-rouge">~/.claude/</code>) and Cursor IDE (<code class="language-plaintext highlighter-rouge">~/.cursor/</code>) and installs all skills to both.</p>
+
+<hr />
+
+<h2 id="what-are-skills">What Are Skills?</h2>
+
+<p>A <strong>skill</strong> is a <code class="language-plaintext highlighter-rouge">SKILL.md</code> file placed in your AI assistant’s skills directory. When you open a repository the skill targets, your AI automatically loads the skill context and follows its rules — for example:</p>
+
+<ul>
+  <li>Always use <code class="language-plaintext highlighter-rouge">version: 3</code> for <code class="language-plaintext highlighter-rouge">execution-environment.yml</code></li>
+  <li>Never suggest plaintext secrets — use <code class="language-plaintext highlighter-rouge">ansible-vault encrypt_string</code></li>
+  <li>Use Makefile targets with <code class="language-plaintext highlighter-rouge">CONTAINER_ENGINE=podman</code>, not direct <code class="language-plaintext highlighter-rouge">ansible-builder</code> calls</li>
+</ul>
+
+<hr />
+
+<h2 id="available-skills">Available Skills</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Skill</th>
+      <th style="text-align: left">Target Repository</th>
+      <th style="text-align: left">What It Does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><a href="skills/aap-config-structure"><code class="language-plaintext highlighter-rouge">aap-config-structure</code></a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap_configuration_template</code></td>
+      <td style="text-align: left">Enforces <code class="language-plaintext highlighter-rouge">config/all/</code> vs <code class="language-plaintext highlighter-rouge">config/&lt;env&gt;/</code> structure</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="skills/aap-secrets-management"><code class="language-plaintext highlighter-rouge">aap-secrets-management</code></a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap_configuration_template</code></td>
+      <td style="text-align: left">Requires <code class="language-plaintext highlighter-rouge">ansible-vault encrypt_string</code>; forbids plaintext</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="skills/aap-infra-roles"><code class="language-plaintext highlighter-rouge">aap-infra-roles</code></a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">infra.aap_configuration</code></td>
+      <td style="text-align: left">Async task pattern and <code class="language-plaintext highlighter-rouge">aap_</code> variable naming</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="skills/ee-yaml-schema"><code class="language-plaintext highlighter-rouge">ee-yaml-schema</code></a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ansible-execution-environment</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">version: 3</code> schema; external <code class="language-plaintext highlighter-rouge">files/</code> dependencies</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="skills/ee-build-workflow"><code class="language-plaintext highlighter-rouge">ee-build-workflow</code></a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ansible-execution-environment</code></td>
+      <td style="text-align: left">Makefile targets with <code class="language-plaintext highlighter-rouge">CONTAINER_ENGINE=podman</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="skills/ansible-good-practices"><code class="language-plaintext highlighter-rouge">ansible-good-practices</code></a></td>
+      <td style="text-align: left">All repositories</td>
+      <td style="text-align: left">Red Hat CoP Zen of Ansible baseline (always installed)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+  <li>Bash 4.0+</li>
+  <li>Claude Code (<code class="language-plaintext highlighter-rouge">~/.claude/</code>) and/or Cursor IDE (<code class="language-plaintext highlighter-rouge">~/.cursor/</code>) installed</li>
+</ul>
+
+<hr />
+
+<h2 id="inspiration">Inspiration</h2>
+
+<p>This project is inspired by and follows the architecture of <a href="https://github.com/tosin2013/rhel-devops-skills-cli"><code class="language-plaintext highlighter-rouge">tosin2013/rhel-devops-skills-cli</code></a>.</p>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://redhat-cop.github.io/aap_config_as_code_docs/">Red Hat CoP AAP Config as Code</a></li>
+  <li><a href="https://redhat-cop.github.io/automation-good-practices/">Red Hat CoP Automation Good Practices</a></li>
+  <li><a href="https://github.com/tosin2013/ansible-execution-environment">ansible-execution-environment</a></li>
+</ul>

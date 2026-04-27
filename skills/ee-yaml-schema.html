@@ -1,0 +1,75 @@
+<h1 id="ee-yaml-schema">ee-yaml-schema</h1>
+
+<p><strong>Target</strong>: <code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code>, <code class="language-plaintext highlighter-rouge">redhat-cop/ee_utilities</code><br />
+<strong>Version</strong>: 1.0.0<br />
+<strong>ADR</strong>: <a href="../adrs/007-execution-environment-yaml-schema">ADR-007</a></p>
+
+<h2 id="purpose">Purpose</h2>
+
+<p>Ensures AI agents always generate <code class="language-plaintext highlighter-rouge">execution-environment.yml</code> manifests using
+the version 3 schema and external dependency files — preventing the outdated
+inline requirements style from versions 1 and 2.</p>
+
+<h2 id="key-rules">Key Rules</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Rule</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Always <code class="language-plaintext highlighter-rouge">version: 3</code></td>
+      <td style="text-align: left">First line of every <code class="language-plaintext highlighter-rouge">execution-environment.yml</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">No inline requirements</td>
+      <td style="text-align: left">Never list collections, Python, or system packages inline</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">files/requirements.yml</code></td>
+      <td style="text-align: left">Ansible collections go here</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">files/requirements.txt</code></td>
+      <td style="text-align: left">Python packages go here</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">files/bindep.txt</code></td>
+      <td style="text-align: left">System packages go here</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">additional_build_steps</code></td>
+      <td style="text-align: left">Custom RUN steps go in this block, not inline</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="compliant-manifest">Compliant Manifest</h2>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="m">3</span>
+<span class="na">build_arg_defaults</span><span class="pi">:</span>
+  <span class="na">ANSIBLE_GALAXY_CLI_COLLECTION_OPTS</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--pre'</span>
+<span class="na">images</span><span class="pi">:</span>
+  <span class="na">base_image</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">registry.redhat.io/ansible-automation-platform/ee-minimal-rhel9:latest</span>
+<span class="na">dependencies</span><span class="pi">:</span>
+  <span class="na">galaxy</span><span class="pi">:</span> <span class="s">files/requirements.yml</span>
+  <span class="na">python</span><span class="pi">:</span> <span class="s">files/requirements.txt</span>
+  <span class="na">system</span><span class="pi">:</span> <span class="s">files/bindep.txt</span>
+</code></pre></div></div>
+
+<h2 id="install">Install</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./install.sh <span class="nb">install</span> <span class="nt">--skill</span> ee-yaml-schema
+</code></pre></div></div>
+
+<h2 id="reference-files">Reference Files</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">execution-environment.yml.example</code> — complete valid v3 manifest</li>
+  <li><code class="language-plaintext highlighter-rouge">requirements.yml.example</code> — sample collection requirements file</li>
+  <li><code class="language-plaintext highlighter-rouge">schema-versions.md</code> — v1/v2/v3 history and migration guide</li>
+</ul>

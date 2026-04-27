@@ -1,0 +1,66 @@
+<h1 id="9-ansible-good-practices-baseline">9. Ansible Good Practices Baseline</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: Ansible Engineering Standards</p>
+
+<h2 id="context">Context</h2>
+
+<p>The Red Hat Communities of Practice publishes an authoritative set of Ansible good practices at https://redhat-cop.github.io/automation-good-practices/. These practices apply across all repositories in the target ecosystem and should inform AI suggestions regardless of which specific skill is active.</p>
+
+<p>Without an explicit good-practices skill, AI agents may generate Ansible code that is functionally correct but violates community conventions (e.g., embedding logic in roles that should be in playbooks, using <code class="language-plaintext highlighter-rouge">shell</code> module where <code class="language-plaintext highlighter-rouge">command</code> suffices, ignoring idempotency).</p>
+
+<h2 id="decision">Decision</h2>
+
+<p>A dedicated <strong><code class="language-plaintext highlighter-rouge">ansible-good-practices</code> skill</strong> will be created and applied to <strong>all target repositories</strong> as a baseline layer. This skill encodes the “Zen of Ansible” and Red Hat CoP role design considerations.</p>
+
+<p>Key principles encoded in the skill:</p>
+
+<ol>
+  <li><strong>Focus on functionality, not software implementation</strong> — roles should express <em>what</em> to configure, not <em>how</em> the underlying software works</li>
+  <li><strong>Idempotency is non-negotiable</strong> — all tasks must be safe to run multiple times without side effects</li>
+  <li><strong>Use purpose-built modules first</strong> — prefer Ansible modules over <code class="language-plaintext highlighter-rouge">shell</code>/<code class="language-plaintext highlighter-rouge">command</code>; use <code class="language-plaintext highlighter-rouge">shell</code> only when no module exists</li>
+  <li><strong>Variable naming conventions</strong> — prefix role variables with the role name (e.g., <code class="language-plaintext highlighter-rouge">aap_config_hostname</code>)</li>
+  <li><strong>No logic in templates</strong> — Jinja2 templates should render data, not contain conditionals beyond simple variable substitution</li>
+  <li><strong>Tags on every task</strong> — tasks must have meaningful tags for selective execution</li>
+  <li><strong>Molecule for testing</strong> — suggest Molecule scenarios for new roles</li>
+</ol>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li>AI-generated Ansible code is immediately aligned with CoP community standards</li>
+  <li>Reduces review cycles caused by style/convention violations</li>
+  <li>Cross-cutting skill means practices are applied consistently regardless of which domain skill is active</li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>The good-practices skill may conflict with legacy patterns in older CoP repositories; exceptions must be documented</li>
+  <li>Keeping the skill current requires monitoring the upstream good-practices site for updates</li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>Write <code class="language-plaintext highlighter-rouge">skills/ansible-good-practices/SKILL.md</code> with the principles above</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">references/zen-of-ansible.md</code> — an excerpt/summary of the Red Hat CoP automation good practices guide</li>
+  <li>Instruct <code class="language-plaintext highlighter-rouge">install.sh</code> to always install <code class="language-plaintext highlighter-rouge">ansible-good-practices</code> alongside any other skill (<code class="language-plaintext highlighter-rouge">--all</code> installs it by default; individual installs also pull it in)</li>
+  <li>Periodically review the upstream good-practices guide and update the skill</li>
+</ol>
+
+<h2 id="related-prd-sections">Related PRD Sections</h2>
+
+<ul>
+  <li>Section 4: Detailed Skill Requirements (<code class="language-plaintext highlighter-rouge">ansible-good-practices</code> row)</li>
+  <li>Section 3.3: Governance &amp; Workflows</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>Red Hat CoP Automation Good Practices: https://redhat-cop.github.io/automation-good-practices/</li>
+  <li><code class="language-plaintext highlighter-rouge">redhat-cop/automation-good-practices</code>: https://github.com/redhat-cop/automation-good-practices</li>
+  <li><code class="language-plaintext highlighter-rouge">redhat-cop/infra.ansible_validated_workflows</code>: https://github.com/redhat-cop/infra.ansible_validated_workflows</li>
+</ul>

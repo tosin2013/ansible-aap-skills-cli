@@ -1,0 +1,72 @@
+<h1 id="skills">Skills</h1>
+
+<p><code class="language-plaintext highlighter-rouge">ansible-aap-skills-cli</code> ships six domain skills targeting the Red Hat CoP Ansible AAP ecosystem,
+plus one contributor meta-skill for maintaining the repository itself.
+Each skill is a <code class="language-plaintext highlighter-rouge">SKILL.md</code> file placed in your AI assistant’s skills directory, providing
+domain-specific rules and context for a specific repository or use case.</p>
+
+<hr />
+
+<h2 id="skills-overview">Skills Overview</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Skill</th>
+      <th style="text-align: left">Target Repositories</th>
+      <th style="text-align: left">ADR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><a href="aap-config-structure">aap-config-structure</a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap_configuration_template</code></td>
+      <td style="text-align: left"><a href="../adrs/001-skill-format-standard">ADR-001</a>, <a href="../adrs/003-documentation-embedding-via-references">ADR-003</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="aap-secrets-management">aap-secrets-management</a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap_configuration_template</code></td>
+      <td style="text-align: left"><a href="../adrs/006-secrets-management">ADR-006</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="aap-infra-roles">aap-infra-roles</a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">infra.aap_configuration</code></td>
+      <td style="text-align: left"><a href="../adrs/001-skill-format-standard">ADR-001</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="ee-yaml-schema">ee-yaml-schema</a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ansible-execution-environment</code>, <code class="language-plaintext highlighter-rouge">ee_utilities</code></td>
+      <td style="text-align: left"><a href="../adrs/007-execution-environment-yaml-schema">ADR-007</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="ee-build-workflow">ee-build-workflow</a></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ansible-execution-environment</code></td>
+      <td style="text-align: left"><a href="../adrs/008-ee-build-toolchain">ADR-008</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="ansible-good-practices">ansible-good-practices</a></td>
+      <td style="text-align: left">All repositories</td>
+      <td style="text-align: left"><a href="../adrs/009-ansible-good-practices">ADR-009</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="skill-research">skill-research</a> <em>(contributor, opt-in)</em></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ansible-aap-skills-cli</code></td>
+      <td style="text-align: left"><a href="../adrs/011-research-reference-maintenance">ADR-011</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="how-skills-work">How Skills Work</h2>
+
+<ol>
+  <li>Run <code class="language-plaintext highlighter-rouge">./install.sh install</code> — skills are copied to <code class="language-plaintext highlighter-rouge">~/.claude/skills/</code> and/or <code class="language-plaintext highlighter-rouge">~/.cursor/skills/</code></li>
+  <li>Open a target repository in your IDE</li>
+  <li>Your AI assistant automatically loads the skill context</li>
+  <li>The AI follows the rules in <code class="language-plaintext highlighter-rouge">SKILL.md</code> for every suggestion it makes</li>
+</ol>
+
+<p>The <code class="language-plaintext highlighter-rouge">ansible-good-practices</code> skill is a <strong>baseline</strong> — it is always installed alongside any other skill.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">skill-research</code> skill is <strong>opt-in</strong> for contributors: <code class="language-plaintext highlighter-rouge">./install.sh install --skill skill-research</code>.</p>

@@ -1,0 +1,71 @@
+<h1 id="7-execution-environment-yaml-schema-version">7. Execution Environment YAML Schema Version</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: Ansible Execution Environment / Build Toolchain</p>
+
+<h2 id="context">Context</h2>
+
+<p>Ansible Execution Environments (EEs) are container images built with <code class="language-plaintext highlighter-rouge">ansible-builder</code>. The <code class="language-plaintext highlighter-rouge">execution-environment.yml</code> manifest has had multiple schema versions (1, 2, 3). The <code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code> repository targets <strong>version 3</strong>, which introduced significant structural changes including the separation of dependency files from the manifest itself.</p>
+
+<p>AI agents that suggest outdated schema syntax (v1/v2 inline <code class="language-plaintext highlighter-rouge">requirements</code>) will produce incompatible manifests.</p>
+
+<h2 id="decision">Decision</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ee-yaml-schema</code> skill will instruct AI agents to <strong>always use <code class="language-plaintext highlighter-rouge">version: 3</code></strong> schema for <code class="language-plaintext highlighter-rouge">execution-environment.yml</code> and to follow these rules:</p>
+
+<ol>
+  <li>Set <code class="language-plaintext highlighter-rouge">version: 3</code> at the top of every <code class="language-plaintext highlighter-rouge">execution-environment.yml</code></li>
+  <li><strong>Do not</strong> inline Python requirements — reference <code class="language-plaintext highlighter-rouge">files/requirements.txt</code> instead</li>
+  <li><strong>Do not</strong> inline system package requirements — reference <code class="language-plaintext highlighter-rouge">files/bindep.txt</code> instead</li>
+  <li><strong>Do not</strong> inline Ansible collection requirements — reference <code class="language-plaintext highlighter-rouge">files/requirements.yml</code> instead</li>
+  <li>Use the <code class="language-plaintext highlighter-rouge">additional_build_steps</code> block for custom RUN steps (not inline shell hacks)</li>
+</ol>
+
+<p>Example compliant manifest skeleton:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="m">3</span>
+<span class="na">build_arg_defaults</span><span class="pi">:</span>
+  <span class="na">ANSIBLE_GALAXY_CLI_COLLECTION_OPTS</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--pre'</span>
+<span class="na">dependencies</span><span class="pi">:</span>
+  <span class="na">galaxy</span><span class="pi">:</span> <span class="s">files/requirements.yml</span>
+  <span class="na">python</span><span class="pi">:</span> <span class="s">files/requirements.txt</span>
+  <span class="na">system</span><span class="pi">:</span> <span class="s">files/bindep.txt</span>
+</code></pre></div></div>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li>Generated manifests are compatible with the target repository’s <code class="language-plaintext highlighter-rouge">ansible-builder</code> version</li>
+  <li>Dependency files remain independently editable without touching the manifest</li>
+  <li>AI is less likely to produce deprecated inline dependency syntax</li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>If the target repository ever pins to v1/v2, this ADR must be revisited</li>
+  <li>Agents must be aware of <code class="language-plaintext highlighter-rouge">files/</code> path conventions; mismatch causes build failures</li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>Write <code class="language-plaintext highlighter-rouge">skills/ee-yaml-schema/SKILL.md</code> encoding the rules above</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">references/execution-environment.yml.example</code> — a valid v3 manifest</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">references/requirements.yml.example</code> — a sample collection requirements file</li>
+  <li>Document the schema version history in <code class="language-plaintext highlighter-rouge">references/schema-versions.md</code> for agent context</li>
+</ol>
+
+<h2 id="related-prd-sections">Related PRD Sections</h2>
+
+<ul>
+  <li>Section 4: Detailed Skill Requirements (<code class="language-plaintext highlighter-rouge">ee-yaml-schema</code> row)</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>ansible-builder EE definition schema: https://ansible.readthedocs.io/projects/builder/en/latest/definition/</li>
+  <li><code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code>: https://github.com/tosin2013/ansible-execution-environment</li>
+  <li><code class="language-plaintext highlighter-rouge">redhat-cop/ee_utilities</code>: https://github.com/redhat-cop/ee_utilities</li>
+</ul>

@@ -1,0 +1,96 @@
+<h1 id="ee-build-workflow">ee-build-workflow</h1>
+
+<p><strong>Target</strong>: <code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code><br />
+<strong>Version</strong>: 1.0.0<br />
+<strong>ADR</strong>: <a href="../adrs/008-ee-build-toolchain">ADR-008</a></p>
+
+<h2 id="purpose">Purpose</h2>
+
+<p>Instructs AI agents to always use the repository’s Makefile targets for building,
+testing, and pushing Execution Environment images — never direct <code class="language-plaintext highlighter-rouge">ansible-builder</code>
+or <code class="language-plaintext highlighter-rouge">docker build</code> invocations. Enforces <code class="language-plaintext highlighter-rouge">CONTAINER_ENGINE=podman</code> for RHEL/Fedora environments.</p>
+
+<h2 id="key-rules">Key Rules</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Rule</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Makefile only</td>
+      <td style="text-align: left">Never call <code class="language-plaintext highlighter-rouge">ansible-builder</code> directly</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Always podman</td>
+      <td style="text-align: left">Pass <code class="language-plaintext highlighter-rouge">CONTAINER_ENGINE=podman</code> to every make target</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">No Docker</td>
+      <td style="text-align: left">Never suggest <code class="language-plaintext highlighter-rouge">docker build</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="build-commands">Build Commands</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Build</span>
+<span class="nv">CONTAINER_ENGINE</span><span class="o">=</span>podman make build
+
+<span class="c"># Test</span>
+<span class="nv">CONTAINER_ENGINE</span><span class="o">=</span>podman make <span class="nb">test</span>
+
+<span class="c"># Push</span>
+<span class="nv">CONTAINER_ENGINE</span><span class="o">=</span>podman make push
+
+<span class="c"># Clean and rebuild</span>
+<span class="nv">CONTAINER_ENGINE</span><span class="o">=</span>podman make clean
+<span class="nv">CONTAINER_ENGINE</span><span class="o">=</span>podman make build
+</code></pre></div></div>
+
+<h2 id="available-makefile-targets">Available Makefile Targets</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Target</th>
+      <th style="text-align: left">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">make build</code></td>
+      <td style="text-align: left">Build the EE image</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">make test</code></td>
+      <td style="text-align: left">Run sanity/integration tests</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">make push</code></td>
+      <td style="text-align: left">Tag and push to registry</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">make clean</code></td>
+      <td style="text-align: left">Remove build artifacts</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">make all</code></td>
+      <td style="text-align: left">Build and test</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="install">Install</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./install.sh <span class="nb">install</span> <span class="nt">--skill</span> ee-build-workflow
+</code></pre></div></div>
+
+<h2 id="reference-files">Reference Files</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Makefile.excerpt</code> — relevant Makefile targets from the upstream repository</li>
+</ul>

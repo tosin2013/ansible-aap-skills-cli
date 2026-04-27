@@ -1,0 +1,159 @@
+<h1 id="11-research-and-reference-maintenance-skill">11. Research and Reference Maintenance Skill</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: Knowledge Management / Contributor Tooling</p>
+
+<h2 id="context">Context</h2>
+
+<p>ADR-003 established the <code class="language-plaintext highlighter-rouge">references/</code> subdirectory convention for supplementary documentation
+within each skill. Its only listed negative consequence was:</p>
+
+<blockquote>
+  <p><em>“Contributors must remember to update <code class="language-plaintext highlighter-rouge">references/</code> when upstream schemas change.”</em></p>
+</blockquote>
+
+<p>This is a real maintenance risk. The six skills in this repository vendor content from six
+different upstream sources (Red Hat CoP GitHub repositories, ansible-builder docs, etc.).
+Without a structured process, vendored reference files silently go stale as upstream evolves.</p>
+
+<p>A second gap emerged during initial skill development: when an upstream problem is discovered
+(incorrect documentation, breaking schema change, missing docs for a feature), there is no
+defined workflow for reporting it back to the upstream maintainers.</p>
+
+<h2 id="decision">Decision</h2>
+
+<p>Add a <strong><code class="language-plaintext highlighter-rouge">skill-research</code> meta-skill</strong> that provides AI agents with:</p>
+
+<ol>
+  <li>A structured workflow for sourcing, formatting, and vendoring upstream documentation into <code class="language-plaintext highlighter-rouge">references/</code> directories</li>
+  <li>A staleness detection process based on <code class="language-plaintext highlighter-rouge">## Last updated</code> comments in vendored files</li>
+  <li>A guided upstream issue-filing workflow using <code class="language-plaintext highlighter-rouge">gh issue create</code> — always with explicit user confirmation before any issue is submitted</li>
+</ol>
+
+<p>This skill targets <strong>contributors</strong> to <code class="language-plaintext highlighter-rouge">ansible-aap-skills-cli</code>, not end users of AAP.
+It is opt-in (<code class="language-plaintext highlighter-rouge">./install.sh install --skill skill-research</code>) and is not part of the auto-install baseline.</p>
+
+<h3 id="scope-of-the-skills-rules">Scope of the skill’s rules</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Rule</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Source discovery</td>
+      <td style="text-align: left">Always consult <code class="language-plaintext highlighter-rouge">sources-catalog.md</code> for canonical upstream URLs before fetching</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Fetch and format</td>
+      <td style="text-align: left">Vendor only the minimum excerpt needed; never embed entire repositories</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Staleness detection</td>
+      <td style="text-align: left">Flag vendored files older than 90 days; compare upstream changelog</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Update workflow</td>
+      <td style="text-align: left">Structured four-step process: check → fetch diff → update file → update timestamp</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Issue classification</td>
+      <td style="text-align: left">Categorise upstream problems as documentation bug, schema/API change, or missing docs</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Issue filing</td>
+      <td style="text-align: left">Draft issue with user, require explicit confirmation, then run <code class="language-plaintext highlighter-rouge">gh issue create</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Confirmation gate</td>
+      <td style="text-align: left">Never file an issue automatically — always show draft to user first</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="issue-filing-target-repos">Issue filing target repos</h3>
+
+<p>Each skill maps to a specific upstream repository for issue filing:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Skill</th>
+      <th style="text-align: left">Upstream Repo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap-config-structure</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">redhat-cop/aap_configuration_template</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap-secrets-management</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">redhat-cop/aap_configuration_template</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">aap-infra-roles</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">redhat-cop/infra.aap_configuration</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ee-yaml-schema</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ee-build-workflow</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">tosin2013/ansible-execution-environment</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ansible-good-practices</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">redhat-cop/automation-good-practices</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">skill-research</code> (this repo)</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">tosin2013/ansible-aap-skills-cli</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li>Closes the maintenance gap from ADR-003 with a structured, AI-assisted workflow</li>
+  <li>Upstream problems found during reference research are captured as actionable issues rather than lost</li>
+  <li>Contributors have a single place to look up authoritative upstream sources (<code class="language-plaintext highlighter-rouge">sources-catalog.md</code>)</li>
+  <li>The confirmation gate on issue filing prevents accidental noise in upstream trackers</li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>Adds a seventh skill to maintain</li>
+  <li>The staleness threshold (90 days) is arbitrary — some references change rarely, others frequently; contributors may need to override per-skill</li>
+  <li><code class="language-plaintext highlighter-rouge">gh issue create</code> requires the contributor to be authenticated to GitHub CLI with write access to the upstream repo (or fork + PR flow for repos they don’t own)</li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>Create <code class="language-plaintext highlighter-rouge">skills/skill-research/</code> with <code class="language-plaintext highlighter-rouge">SKILL.md</code>, <code class="language-plaintext highlighter-rouge">config.sh</code>, and three reference files</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">docs/skills/skill-research.md</code> to the GitHub Pages site</li>
+  <li>Update <code class="language-plaintext highlighter-rouge">docs/skills/index.md</code> and <code class="language-plaintext highlighter-rouge">docs/adrs/index.md</code> to include the new entries</li>
+  <li>Commit and push</li>
+</ol>
+
+<h2 id="related-adrs">Related ADRs</h2>
+
+<ul>
+  <li><a href="003-documentation-embedding-via-references.md">ADR-003</a> — establishes the <code class="language-plaintext highlighter-rouge">references/</code> convention this skill maintains</li>
+  <li><a href="010-github-pages-documentation.md">ADR-010</a> — GitHub Pages site that will surface this ADR</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">gh issue create</code> documentation: https://cli.github.com/manual/gh_issue_create</li>
+  <li>Red Hat CoP contribution guidelines: https://github.com/redhat-cop/.github/blob/main/CONTRIBUTING.md</li>
+</ul>

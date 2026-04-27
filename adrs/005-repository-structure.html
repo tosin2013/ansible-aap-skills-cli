@@ -1,0 +1,87 @@
+<h1 id="5-repository-structure">5. Repository Structure</h1>
+
+<p><strong>Status</strong>: Accepted<br />
+<strong>Date</strong>: 2026-04-27<br />
+<strong>Domain</strong>: Project Organization</p>
+
+<h2 id="context">Context</h2>
+
+<p>A consistent, predictable repository layout reduces cognitive overhead for contributors and ensures the installer can locate skills reliably. The reference project <code class="language-plaintext highlighter-rouge">rhel-devops-skills-cli</code> established a layout that has proven navigable and extensible.</p>
+
+<h2 id="decision">Decision</h2>
+
+<p>The repository will <strong>mirror the <code class="language-plaintext highlighter-rouge">rhel-devops-skills-cli</code> layout</strong> with Ansible-specific adaptations:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ansible-aap-skills-cli/
+├── install.sh                     # Main CLI installer
+├── README.md
+├── CONTRIBUTING.md
+├── docs/
+│   └── adrs/                      # Architecture Decision Records
+├── tests/                         # Bash (bats) tests for the installer
+└── skills/
+    ├── aap-config-structure/
+    │   ├── SKILL.md
+    │   ├── config.sh              # Skill metadata (name, version, description)
+    │   └── references/            # Supplementary docs / example YAML
+    ├── aap-secrets-management/
+    │   ├── SKILL.md
+    │   └── config.sh
+    ├── aap-infra-roles/
+    │   ├── SKILL.md
+    │   └── config.sh
+    ├── ee-yaml-schema/
+    │   ├── SKILL.md
+    │   └── config.sh
+    ├── ee-build-workflow/
+    │   ├── SKILL.md
+    │   └── config.sh
+    └── ansible-good-practices/
+        ├── SKILL.md
+        └── config.sh
+</code></pre></div></div>
+
+<p>Each skill’s <code class="language-plaintext highlighter-rouge">config.sh</code> exports metadata variables consumed by <code class="language-plaintext highlighter-rouge">install.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SKILL_NAME</span><span class="o">=</span><span class="s2">"aap-config-structure"</span>
+<span class="nv">SKILL_VERSION</span><span class="o">=</span><span class="s2">"1.0.0"</span>
+<span class="nv">SKILL_DESCRIPTION</span><span class="o">=</span><span class="s2">"Enforces AAP config-as-code directory structure"</span>
+<span class="nv">SKILL_TARGETS</span><span class="o">=</span><span class="s2">"aap_configuration_template"</span>
+</code></pre></div></div>
+
+<h2 id="consequences">Consequences</h2>
+
+<p><strong>Positive:</strong></p>
+<ul>
+  <li>Familiar to contributors from <code class="language-plaintext highlighter-rouge">rhel-devops-skills-cli</code></li>
+  <li><code class="language-plaintext highlighter-rouge">install.sh</code> can glob <code class="language-plaintext highlighter-rouge">skills/*/config.sh</code> to discover all skills dynamically</li>
+  <li>Clear separation of installer logic, skill content, docs, and tests</li>
+</ul>
+
+<p><strong>Negative:</strong></p>
+<ul>
+  <li>Flat <code class="language-plaintext highlighter-rouge">skills/</code> directory does not group by target repository — acceptable at current scale of 6 skills</li>
+  <li><code class="language-plaintext highlighter-rouge">config.sh</code> metadata is informal; a YAML manifest could be more structured but adds tooling dependency</li>
+</ul>
+
+<h2 id="implementation-plan">Implementation Plan</h2>
+
+<ol>
+  <li>Create the directory skeleton in Phase 1 scaffolding</li>
+  <li>Add a <code class="language-plaintext highlighter-rouge">config.sh</code> template that new skills must copy and fill in</li>
+  <li>Document the layout in <code class="language-plaintext highlighter-rouge">CONTRIBUTING.md</code></li>
+  <li>Update <code class="language-plaintext highlighter-rouge">install.sh list</code> to parse <code class="language-plaintext highlighter-rouge">config.sh</code> for display</li>
+</ol>
+
+<h2 id="related-prd-sections">Related PRD Sections</h2>
+
+<ul>
+  <li>Section 5: File Structure</li>
+  <li>Section 6 Phase 1: CLI Scaffolding</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">tosin2013/rhel-devops-skills-cli</code> — reference directory layout</li>
+</ul>
