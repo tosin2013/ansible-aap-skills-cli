@@ -38,6 +38,7 @@ The installer auto-detects Claude Code (`~/.claude/`) and Cursor IDE (`~/.cursor
 | `eda-configuration` | `eda_configuration` | Rulebook structure, activation ordering, decision environment selection |
 | `aap-utilities` | `aap_utilities`, `aap_configuration_template` | Operational helper roles: ping, export, bulk-tag, token management |
 | `ansible-validated-workflows` | `infra.ansible_validated_workflows` | Pre-built workflows for patching, provisioning, compliance, cert rotation |
+| `aap-install` | `ansible-automation-platform` | Pre-flight, OpenShift Operator (gitops-catalog + raw YAML), self-hosted install, post-install validation for AAP 2.6 |
 | `skill-research` *(contributor, opt-in)* | `ansible-aap-skills-cli` | Meta-skill for maintaining reference files and filing upstream issues |
 
 ---
@@ -112,7 +113,7 @@ aap-secrets-management         1.0.0      claude     installed
 ansible-aap-skills-cli/
 ├── install.sh                     # CLI installer
 ├── docs/
-│   └── adrs/                      # Architecture Decision Records (ADR-001..016)
+│   └── adrs/                      # Architecture Decision Records (ADR-001..017)
 ├── tests/
 │   └── install.bats               # bats test suite
 └── skills/
@@ -130,6 +131,7 @@ ansible-aap-skills-cli/
     ├── eda-configuration/
     ├── aap-utilities/
     ├── ansible-validated-workflows/
+    ├── aap-install/
     └── skill-research/
 ```
 
@@ -161,6 +163,7 @@ All architectural decisions are documented as ADRs in [`docs/adrs/`](docs/adrs/)
 - [ADR-014](docs/adrs/014-eda-configuration-skill.md) — EDA Configuration Skill
 - [ADR-015](docs/adrs/015-aap-utilities-skill.md) — AAP Utilities Skill
 - [ADR-016](docs/adrs/016-ansible-validated-workflows-skill.md) — Ansible Validated Workflows Skill
+- [ADR-017](docs/adrs/017-aap-install-skill.md) — AAP Install Skill
 
 ---
 

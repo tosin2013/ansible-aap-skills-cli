@@ -35,6 +35,7 @@ a permanent record of *why* the project is built the way it is.
 | [ADR-014](014-eda-configuration-skill) | EDA Configuration Skill | Accepted | Skill Development |
 | [ADR-015](015-aap-utilities-skill) | AAP Utilities Skill | Accepted | Skill Development |
 | [ADR-016](016-ansible-validated-workflows-skill) | Ansible Validated Workflows Skill | Accepted | Skill Development |
+| [ADR-017](017-aap-install-skill) | AAP Install Skill | Accepted | Skill Development |
 
 ---
 

@@ -7,7 +7,7 @@ has_children: true
 
 # Skills
 
-`ansible-aap-skills-cli` ships eleven domain skills targeting the Red Hat CoP Ansible AAP ecosystem,
+`ansible-aap-skills-cli` ships twelve domain skills targeting the Red Hat CoP Ansible AAP ecosystem,
 plus one contributor meta-skill for maintaining the repository itself.
 Each skill is a `SKILL.md` file placed in your AI assistant's skills directory, providing
 domain-specific rules and context for a specific repository or use case.
@@ -29,6 +29,7 @@ domain-specific rules and context for a specific repository or use case.
 | [eda-configuration](eda-configuration) | `eda_configuration` | [ADR-014](../adrs/014-eda-configuration-skill) |
 | [aap-utilities](aap-utilities) | `aap_utilities`, `aap_configuration_template` | [ADR-015](../adrs/015-aap-utilities-skill) |
 | [ansible-validated-workflows](ansible-validated-workflows) | `infra.ansible_validated_workflows` | [ADR-016](../adrs/016-ansible-validated-workflows-skill) |
+| [aap-install](aap-install) | `ansible-automation-platform` | [ADR-017](../adrs/017-aap-install-skill) |
 | [skill-research](skill-research) *(contributor, opt-in)* | `ansible-aap-skills-cli` | [ADR-011](../adrs/011-research-reference-maintenance) |
 
 ---

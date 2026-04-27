@@ -30,6 +30,10 @@ any upstream content.
 | `eda-configuration` (event sources) | https://github.com/ansible/event-driven-ansible | Event source plugins (SQS, Kafka, webhook) | `ansible/event-driven-ansible` |
 | `aap-utilities` | https://github.com/redhat-cop/aap_utilities | Role list, `README.md`, variable schemas | `redhat-cop/aap_utilities` |
 | `ansible-validated-workflows` | https://github.com/redhat-cop/infra.ansible_validated_workflows | Workflow roles, `README.md`, required vars | `redhat-cop/infra.ansible_validated_workflows` |
+| `aap-install` (planning) | https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.6/html/red_hat_ansible_automation_platform_planning_guide/ | Sizing, prerequisites, component overview | N/A (Red Hat docs) |
+| `aap-install` (OCP install) | https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.6/html/deploying_the_red_hat_ansible_automation_platform_operator_on_red_hat_openshift_container_platform/ | Operator install, AutomationController CR, Hub CR | N/A (Red Hat docs) |
+| `aap-install` (self-hosted) | https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.6/html/red_hat_ansible_automation_platform_installation_guide/ | Inventory file groups, setup.sh flags, air-gapped bundle | N/A (Red Hat docs) |
+| `aap-install` (gitops-catalog) | https://github.com/redhat-cop/gitops-catalog/tree/main/ansible-automation-platform | Kustomize overlays for operator, instance, hub-instance | `redhat-cop/gitops-catalog` |
 | `skill-research` (this repo) | https://github.com/tosin2013/ansible-aap-skills-cli | `skills/`, `docs/adrs/` | `tosin2013/ansible-aap-skills-cli` |
 
 ---
@@ -43,6 +47,7 @@ These are referenced by multiple skills or provide supporting context:
 | Red Hat CoP AAP Config as Code docs | https://redhat-cop.github.io/aap_config_as_code_docs/ | `aap-config-structure`, `aap-infra-roles` |
 | Ansible Automation Platform docs | https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/ | All AAP skills |
 | ansible-builder changelog | https://github.com/ansible/ansible-builder/blob/devel/CHANGELOG.rst | `ee-yaml-schema` |
+| Red Hat CoP gitops-catalog | https://github.com/redhat-cop/gitops-catalog/tree/main/ansible-automation-platform | `aap-install` |
 | ee_utilities collection | https://github.com/redhat-cop/ee_utilities | `ee-yaml-schema` |
 | infra.ansible_validated_workflows | https://github.com/redhat-cop/infra.ansible_validated_workflows | `ansible-good-practices`, `ansible-validated-workflows` |
 | eda_configuration collection | https://github.com/redhat-cop/eda_configuration | `eda-configuration` |
