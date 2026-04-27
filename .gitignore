@@ -1,0 +1,20 @@
+# PRD is an internal planning document, not part of the public repo
+PRD.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Environment
+.env
+.env.*
+
+# Ansible
+*.retry
