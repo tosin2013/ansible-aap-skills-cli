@@ -153,7 +153,7 @@ bats tests/install.bats
 ### Run a specific test
 
 ```bash
-bats tests/install.bats --filter "list: shows all 6 skills"
+bats tests/install.bats --filter "list"
 ```
 
 ### Run shellcheck

@@ -25,6 +25,11 @@ any upstream content.
 | `aap-live-validation` (navigator) | https://ansible.readthedocs.io/projects/navigator/ | `ansible-navigator run` flags, `--check`, `--mode stdout` | `ansible/ansible-navigator` |
 | `aap-live-validation` (awx collection) | https://github.com/ansible/awx/tree/devel/awx_collection | `awx.awx.controller_meta`, `awx.awx.token` modules | `ansible/awx` |
 | `aap-live-validation` (OCP operator) | https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform | AAP Operator on OpenShift, route/secret layout | N/A (Red Hat docs) |
+| `eda-configuration` | https://github.com/redhat-cop/eda_configuration | Role list, variable schemas, `README.md` | `redhat-cop/eda_configuration` |
+| `eda-configuration` (rulebook) | https://ansible.readthedocs.io/projects/rulebook/ | Rulebook format, conditions, actions | `ansible/event-driven-ansible` |
+| `eda-configuration` (event sources) | https://github.com/ansible/event-driven-ansible | Event source plugins (SQS, Kafka, webhook) | `ansible/event-driven-ansible` |
+| `aap-utilities` | https://github.com/redhat-cop/aap_utilities | Role list, `README.md`, variable schemas | `redhat-cop/aap_utilities` |
+| `ansible-validated-workflows` | https://github.com/redhat-cop/infra.ansible_validated_workflows | Workflow roles, `README.md`, required vars | `redhat-cop/infra.ansible_validated_workflows` |
 | `skill-research` (this repo) | https://github.com/tosin2013/ansible-aap-skills-cli | `skills/`, `docs/adrs/` | `tosin2013/ansible-aap-skills-cli` |
 
 ---
@@ -39,7 +44,9 @@ These are referenced by multiple skills or provide supporting context:
 | Ansible Automation Platform docs | https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/ | All AAP skills |
 | ansible-builder changelog | https://github.com/ansible/ansible-builder/blob/devel/CHANGELOG.rst | `ee-yaml-schema` |
 | ee_utilities collection | https://github.com/redhat-cop/ee_utilities | `ee-yaml-schema` |
-| infra.ansible_validated_workflows | https://github.com/redhat-cop/infra.ansible_validated_workflows | `ansible-good-practices` |
+| infra.ansible_validated_workflows | https://github.com/redhat-cop/infra.ansible_validated_workflows | `ansible-good-practices`, `ansible-validated-workflows` |
+| eda_configuration collection | https://github.com/redhat-cop/eda_configuration | `eda-configuration` |
+| aap_utilities collection | https://github.com/redhat-cop/aap_utilities | `aap-utilities` |
 
 ---
 

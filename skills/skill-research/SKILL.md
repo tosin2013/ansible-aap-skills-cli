@@ -14,6 +14,8 @@ who are building or maintaining the skills in this repository.
 
 ---
 
+## Rules
+
 ## Rule 1 — Always consult sources-catalog.md before fetching
 
 Before fetching any upstream content, look up the canonical source in

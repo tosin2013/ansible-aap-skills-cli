@@ -35,6 +35,10 @@ The installer auto-detects Claude Code (`~/.claude/`) and Cursor IDE (`~/.cursor
 | `ansible-navigator` | `ansible-execution-environment`, `aap_configuration_template` | `ansible-navigator.yml` config + EE smoke test after build |
 | `ansible-good-practices` | All repositories | Red Hat CoP Zen of Ansible baseline (always installed) |
 | `aap-live-validation` | `aap_configuration_template`, `infra.aap_configuration` | Platform-aware validation sequence for live AAP servers (OpenShift + standalone) |
+| `eda-configuration` | `eda_configuration` | Rulebook structure, activation ordering, decision environment selection |
+| `aap-utilities` | `aap_utilities`, `aap_configuration_template` | Operational helper roles: ping, export, bulk-tag, token management |
+| `ansible-validated-workflows` | `infra.ansible_validated_workflows` | Pre-built workflows for patching, provisioning, compliance, cert rotation |
+| `skill-research` *(contributor, opt-in)* | `ansible-aap-skills-cli` | Meta-skill for maintaining reference files and filing upstream issues |
 
 ---
 
@@ -108,7 +112,7 @@ aap-secrets-management         1.0.0      claude     installed
 ansible-aap-skills-cli/
 ├── install.sh                     # CLI installer
 ├── docs/
-│   └── adrs/                      # Architecture Decision Records (ADR-001..009)
+│   └── adrs/                      # Architecture Decision Records (ADR-001..016)
 ├── tests/
 │   └── install.bats               # bats test suite
 └── skills/
@@ -122,7 +126,11 @@ ansible-aap-skills-cli/
     ├── ee-build-workflow/
     ├── ansible-navigator/
     ├── ansible-good-practices/
-    └── aap-live-validation/
+    ├── aap-live-validation/
+    ├── eda-configuration/
+    ├── aap-utilities/
+    ├── ansible-validated-workflows/
+    └── skill-research/
 ```
 
 ---
@@ -150,6 +158,9 @@ All architectural decisions are documented as ADRs in [`docs/adrs/`](docs/adrs/)
 - [ADR-011](docs/adrs/011-research-reference-maintenance.md) — Research and Reference Maintenance
 - [ADR-012](docs/adrs/012-aap-live-validation-skill.md) — AAP Live Validation Skill
 - [ADR-013](docs/adrs/013-ansible-navigator-skill.md) — ansible-navigator Skill
+- [ADR-014](docs/adrs/014-eda-configuration-skill.md) — EDA Configuration Skill
+- [ADR-015](docs/adrs/015-aap-utilities-skill.md) — AAP Utilities Skill
+- [ADR-016](docs/adrs/016-ansible-validated-workflows-skill.md) — Ansible Validated Workflows Skill
 
 ---
 

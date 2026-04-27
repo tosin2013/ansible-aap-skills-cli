@@ -61,6 +61,11 @@ Each skill maps to a specific upstream repository for issue filing:
 | `ee-yaml-schema` | `tosin2013/ansible-execution-environment` |
 | `ee-build-workflow` | `tosin2013/ansible-execution-environment` |
 | `ansible-good-practices` | `redhat-cop/automation-good-practices` |
+| `ansible-navigator` | `ansible/ansible-navigator` |
+| `aap-live-validation` | N/A (AAP official docs — open support case) |
+| `eda-configuration` | `redhat-cop/eda_configuration` |
+| `aap-utilities` | `redhat-cop/aap_utilities` |
+| `ansible-validated-workflows` | `redhat-cop/infra.ansible_validated_workflows` |
 | `skill-research` (this repo) | `tosin2013/ansible-aap-skills-cli` |
 
 ## Consequences

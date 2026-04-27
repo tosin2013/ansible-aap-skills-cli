@@ -2,7 +2,9 @@
 
 You are assisting engineers working in the `redhat-cop/infra.aap_configuration` collection.
 
-## Variable Naming Conventions
+## Rules
+
+### Variable Naming Conventions
 
 All variables MUST use the `aap_` prefix to avoid namespace collisions:
 
@@ -14,7 +16,7 @@ All variables MUST use the `aap_` prefix to avoid namespace collisions:
 | Controller password | `aap_password` | `password` |
 | Validate certs | `aap_validate_certs` | `validate_certs` |
 
-## Async Task Pattern
+### Async Task Pattern
 
 The `infra.aap_configuration` collection processes large numbers of resources
 (job templates, credentials, inventories) using Ansible's async mechanism to
@@ -45,7 +47,7 @@ Always use this pattern when configuring multiple AAP resources:
 
 See `references/async-pattern.yml` for a complete multi-resource example.
 
-## Role Invocation Rules
+### Role Invocation Rules
 
 ### Rule 1 — Always pass connection variables explicitly
 

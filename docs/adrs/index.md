@@ -32,6 +32,9 @@ a permanent record of *why* the project is built the way it is.
 | [ADR-011](011-research-reference-maintenance) | Research and Reference Maintenance | Accepted | Knowledge Management |
 | [ADR-012](012-aap-live-validation-skill) | AAP Live Validation Skill | Accepted | Skill Development |
 | [ADR-013](013-ansible-navigator-skill) | ansible-navigator Skill | Accepted | Skill Development |
+| [ADR-014](014-eda-configuration-skill) | EDA Configuration Skill | Accepted | Skill Development |
+| [ADR-015](015-aap-utilities-skill) | AAP Utilities Skill | Accepted | Skill Development |
+| [ADR-016](016-ansible-validated-workflows-skill) | Ansible Validated Workflows Skill | Accepted | Skill Development |
 
 ---
 

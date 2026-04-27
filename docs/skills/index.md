@@ -7,7 +7,7 @@ has_children: true
 
 # Skills
 
-`ansible-aap-skills-cli` ships eight domain skills targeting the Red Hat CoP Ansible AAP ecosystem,
+`ansible-aap-skills-cli` ships eleven domain skills targeting the Red Hat CoP Ansible AAP ecosystem,
 plus one contributor meta-skill for maintaining the repository itself.
 Each skill is a `SKILL.md` file placed in your AI assistant's skills directory, providing
 domain-specific rules and context for a specific repository or use case.
@@ -26,6 +26,9 @@ domain-specific rules and context for a specific repository or use case.
 | [ansible-navigator](ansible-navigator) | `ansible-execution-environment`, `aap_configuration_template` | [ADR-013](../adrs/013-ansible-navigator-skill) |
 | [ansible-good-practices](ansible-good-practices) | All repositories | [ADR-009](../adrs/009-ansible-good-practices) |
 | [aap-live-validation](aap-live-validation) | `aap_configuration_template`, `infra.aap_configuration` | [ADR-012](../adrs/012-aap-live-validation-skill) |
+| [eda-configuration](eda-configuration) | `eda_configuration` | [ADR-014](../adrs/014-eda-configuration-skill) |
+| [aap-utilities](aap-utilities) | `aap_utilities`, `aap_configuration_template` | [ADR-015](../adrs/015-aap-utilities-skill) |
+| [ansible-validated-workflows](ansible-validated-workflows) | `infra.ansible_validated_workflows` | [ADR-016](../adrs/016-ansible-validated-workflows-skill) |
 | [skill-research](skill-research) *(contributor, opt-in)* | `ansible-aap-skills-cli` | [ADR-011](../adrs/011-research-reference-maintenance) |
 
 ---
