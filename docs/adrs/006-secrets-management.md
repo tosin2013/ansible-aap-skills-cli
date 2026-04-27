@@ -27,7 +27,7 @@ Specific rules encoded in the skill:
 1. **Never** suggest or generate plaintext secret values in any YAML file
 2. Use `ansible-vault encrypt_string --stdin-name <var_name>` to produce vault-encrypted strings
 3. Store encrypted strings in `config/<env>/secrets.yml` (environment-scoped)
-4. Reference secrets via Ansible variable interpolation (`"{{ vault_<var_name> }}"`)
+4. Reference secrets via Ansible variable interpolation (`"{% raw %}{{ vault_<var_name> }}{% endraw %}"`)
 5. `secrets.yml` files **must** be committed to the repository — they are safe because values are encrypted
 
 ## Consequences
