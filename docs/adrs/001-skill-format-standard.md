@@ -1,3 +1,10 @@
+---
+title: "ADR-001: Skill Format Standard"
+layout: default
+parent: Architecture Decisions
+nav_order: 1
+---
+
 # 1. Skill Format Standard
 
 **Status**: Accepted  

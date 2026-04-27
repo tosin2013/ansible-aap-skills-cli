@@ -1,0 +1,43 @@
+title: ansible-aap-skills-cli
+description: >-
+  AI Agent Skills CLI for the Red Hat Communities of Practice Ansible AAP ecosystem.
+  Delivers SKILL.md-based context to Claude Code and Cursor IDE.
+
+remote_theme: just-the-docs/just-the-docs@v0.10.0
+
+url: https://tosin2013.github.io
+baseurl: /ansible-aap-skills-cli
+
+# Navigation
+nav_enabled: true
+search_enabled: true
+search_tokenizer_separator: /[\s/]+/
+
+# Header links
+aux_links:
+  GitHub:
+    - https://github.com/tosin2013/ansible-aap-skills-cli
+
+aux_links_new_tab: true
+
+# Footer
+footer_content: >-
+  Maintained by <a href="https://github.com/tosin2013">Tosin Akinosho</a>.
+  Distributed under the Apache 2.0 License.
+
+# Back to top
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Heading anchors
+heading_anchors: true
+
+# Color scheme (light is the default; options: light, dark)
+color_scheme: light
+
+# Exclude files from Jekyll build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - "*.gemspec"
+  - vendor/

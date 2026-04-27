@@ -1,3 +1,10 @@
+---
+title: "ADR-009: Ansible Good Practices"
+layout: default
+parent: Architecture Decisions
+nav_order: 9
+---
+
 # 9. Ansible Good Practices Baseline
 
 **Status**: Accepted  

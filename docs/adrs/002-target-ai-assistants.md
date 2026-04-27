@@ -1,3 +1,10 @@
+---
+title: "ADR-002: Target AI Assistants"
+layout: default
+parent: Architecture Decisions
+nav_order: 2
+---
+
 # 2. Target AI Assistants
 
 **Status**: Accepted  

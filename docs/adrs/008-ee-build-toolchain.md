@@ -1,3 +1,10 @@
+---
+title: "ADR-008: EE Build Toolchain"
+layout: default
+parent: Architecture Decisions
+nav_order: 8
+---
+
 # 8. Execution Environment Build Toolchain
 
 **Status**: Accepted  

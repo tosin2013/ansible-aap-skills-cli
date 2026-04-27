@@ -1,3 +1,10 @@
+---
+title: "ADR-005: Repository Structure"
+layout: default
+parent: Architecture Decisions
+nav_order: 5
+---
+
 # 5. Repository Structure
 
 **Status**: Accepted  

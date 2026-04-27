@@ -1,3 +1,10 @@
+---
+title: "ADR-003: Documentation Embedding via References"
+layout: default
+parent: Architecture Decisions
+nav_order: 3
+---
+
 # 3. Documentation Embedding via References Subdirectory
 
 **Status**: Accepted  

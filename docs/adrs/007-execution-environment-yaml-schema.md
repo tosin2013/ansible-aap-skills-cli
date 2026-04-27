@@ -1,3 +1,10 @@
+---
+title: "ADR-007: EE YAML Schema Version"
+layout: default
+parent: Architecture Decisions
+nav_order: 7
+---
+
 # 7. Execution Environment YAML Schema Version
 
 **Status**: Accepted  

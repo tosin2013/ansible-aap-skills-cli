@@ -1,3 +1,10 @@
+---
+title: "ADR-004: Shell-Based CLI Installer"
+layout: default
+parent: Architecture Decisions
+nav_order: 4
+---
+
 # 4. Shell-Based CLI Installer
 
 **Status**: Accepted  

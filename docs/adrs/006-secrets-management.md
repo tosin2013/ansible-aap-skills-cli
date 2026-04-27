@@ -1,3 +1,10 @@
+---
+title: "ADR-006: Secrets Management"
+layout: default
+parent: Architecture Decisions
+nav_order: 6
+---
+
 # 6. Secrets Management
 
 **Status**: Accepted  
