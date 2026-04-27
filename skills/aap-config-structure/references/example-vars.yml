@@ -1,0 +1,40 @@
+# Example: config/all/organizations.yml
+# Global — identical across all environments
+---
+controller_organizations:
+  - name: "Red Hat CoP"
+    description: "Red Hat Communities of Practice"
+    max_hosts: 0
+
+---
+# Example: config/all/projects.yml
+# Global — SCM URL and branch are the same everywhere
+controller_projects:
+  - name: "AAP Configuration"
+    organization: "Red Hat CoP"
+    scm_type: git
+    scm_url: "https://github.com/redhat-cop/aap_configuration_template.git"
+    scm_branch: main
+    scm_clean: true
+    scm_update_on_launch: true
+
+---
+# Example: config/dev/inventories.yml
+# Environment-scoped — hosts differ per env
+controller_inventories:
+  - name: "Dev Inventory"
+    organization: "Red Hat CoP"
+    description: "Development environment hosts"
+    variables:
+      ansible_user: ec2-user
+      env: dev
+
+---
+# Example: config/prod/inventories.yml
+controller_inventories:
+  - name: "Production Inventory"
+    organization: "Red Hat CoP"
+    description: "Production environment hosts"
+    variables:
+      ansible_user: ec2-user
+      env: prod

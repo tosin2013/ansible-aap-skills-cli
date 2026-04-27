@@ -1,0 +1,23 @@
+# Valid version: 3 execution-environment.yml
+# For use with ansible-builder >= 3.0
+---
+version: 3
+
+build_arg_defaults:
+  ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: '--pre'
+
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform/ee-minimal-rhel9:latest
+
+dependencies:
+  galaxy: files/requirements.yml
+  python: files/requirements.txt
+  system: files/bindep.txt
+
+additional_build_steps:
+  prepend_galaxy:
+    - RUN pip3 install --upgrade pip setuptools wheel
+  append_final:
+    - RUN ansible-galaxy collection list
+    - RUN ansible --version

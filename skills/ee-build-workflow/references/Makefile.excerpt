@@ -1,0 +1,43 @@
+# Excerpt from tosin2013/ansible-execution-environment Makefile
+# Source: https://github.com/tosin2013/ansible-execution-environment
+
+CONTAINER_ENGINE ?= podman
+IMAGE_NAME ?= ansible-execution-environment
+IMAGE_TAG ?= latest
+REGISTRY ?= quay.io/your-org
+
+.PHONY: build test push clean all
+
+## Build the Execution Environment image
+build:
+	ansible-builder build \
+		--tag $(IMAGE_NAME):$(IMAGE_TAG) \
+		--container-runtime $(CONTAINER_ENGINE) \
+		--verbosity 2
+
+## Run sanity tests against the built image
+test:
+	$(CONTAINER_ENGINE) run --rm $(IMAGE_NAME):$(IMAGE_TAG) \
+		ansible --version
+	$(CONTAINER_ENGINE) run --rm $(IMAGE_NAME):$(IMAGE_TAG) \
+		ansible-galaxy collection list
+
+## Tag and push the image to the registry
+push:
+	$(CONTAINER_ENGINE) tag $(IMAGE_NAME):$(IMAGE_TAG) $(REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
+	$(CONTAINER_ENGINE) push $(REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
+
+## Remove build artifacts and intermediate containers
+clean:
+	$(CONTAINER_ENGINE) rmi $(IMAGE_NAME):$(IMAGE_TAG) 2>/dev/null || true
+	rm -rf context/
+
+## Build and test in one step
+all: build test
+
+# Usage:
+#   CONTAINER_ENGINE=podman make build
+#   CONTAINER_ENGINE=podman make test
+#   CONTAINER_ENGINE=podman make push REGISTRY=quay.io/myorg
+#   CONTAINER_ENGINE=podman make clean
+#   CONTAINER_ENGINE=podman make all

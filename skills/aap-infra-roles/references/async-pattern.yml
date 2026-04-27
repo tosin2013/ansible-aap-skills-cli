@@ -1,0 +1,68 @@
+# Complete async pattern for infra.aap_configuration
+# Configures multiple AAP resources in parallel using async tasks
+---
+- name: Configure AAP resources
+  hosts: localhost
+  gather_facts: false
+  vars:
+    aap_hostname: "{{ aap_hostname }}"
+    aap_token: "{{ aap_token }}"
+    aap_validate_certs: "{{ aap_validate_certs | default(true) }}"
+
+  tasks:
+    # --- Step 1: Launch all resource configurations asynchronously ---
+
+    - name: Configure organizations
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.organizations
+      vars:
+        aap_hostname: "{{ aap_hostname }}"
+        aap_token: "{{ aap_token }}"
+        aap_validate_certs: "{{ aap_validate_certs }}"
+      async: 3600
+      poll: 0
+      register: organizations_async
+
+    - name: Configure credential types
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.credential_types
+      vars:
+        aap_hostname: "{{ aap_hostname }}"
+        aap_token: "{{ aap_token }}"
+        aap_validate_certs: "{{ aap_validate_certs }}"
+      async: 3600
+      poll: 0
+      register: credential_types_async
+
+    # --- Step 2: Wait for all async tasks to complete ---
+
+    - name: Wait for organizations
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      vars:
+        async_results: "{{ organizations_async }}"
+
+    - name: Wait for credential types
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      vars:
+        async_results: "{{ credential_types_async }}"
+
+    # --- Step 3: Configure resources that depend on the above ---
+
+    - name: Configure credentials
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.credentials
+      vars:
+        aap_hostname: "{{ aap_hostname }}"
+        aap_token: "{{ aap_token }}"
+        aap_validate_certs: "{{ aap_validate_certs }}"
+      async: 3600
+      poll: 0
+      register: credentials_async
+
+    - name: Wait for credentials
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      vars:
+        async_results: "{{ credentials_async }}"
