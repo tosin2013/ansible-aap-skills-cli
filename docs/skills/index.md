@@ -7,7 +7,8 @@ has_children: true
 
 # Skills
 
-`ansible-aap-skills-cli` ships six skills targeting the Red Hat CoP Ansible AAP ecosystem.
+`ansible-aap-skills-cli` ships six domain skills targeting the Red Hat CoP Ansible AAP ecosystem,
+plus one contributor meta-skill for maintaining the repository itself.
 Each skill is a `SKILL.md` file placed in your AI assistant's skills directory, providing
 domain-specific rules and context for a specific repository or use case.
 
@@ -23,6 +24,7 @@ domain-specific rules and context for a specific repository or use case.
 | [ee-yaml-schema](ee-yaml-schema) | `ansible-execution-environment`, `ee_utilities` | [ADR-007](../adrs/007-execution-environment-yaml-schema) |
 | [ee-build-workflow](ee-build-workflow) | `ansible-execution-environment` | [ADR-008](../adrs/008-ee-build-toolchain) |
 | [ansible-good-practices](ansible-good-practices) | All repositories | [ADR-009](../adrs/009-ansible-good-practices) |
+| [skill-research](skill-research) *(contributor, opt-in)* | `ansible-aap-skills-cli` | [ADR-011](../adrs/011-research-reference-maintenance) |
 
 ---
 
@@ -34,3 +36,5 @@ domain-specific rules and context for a specific repository or use case.
 4. The AI follows the rules in `SKILL.md` for every suggestion it makes
 
 The `ansible-good-practices` skill is a **baseline** — it is always installed alongside any other skill.
+
+The `skill-research` skill is **opt-in** for contributors: `./install.sh install --skill skill-research`.

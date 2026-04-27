@@ -29,6 +29,7 @@ a permanent record of *why* the project is built the way it is.
 | [ADR-008](008-ee-build-toolchain) | EE Build Toolchain | Accepted | Build Toolchain |
 | [ADR-009](009-ansible-good-practices) | Ansible Good Practices Baseline | Accepted | Engineering Standards |
 | [ADR-010](010-github-pages-documentation) | GitHub Pages Documentation Site | Accepted | Documentation |
+| [ADR-011](011-research-reference-maintenance) | Research and Reference Maintenance | Accepted | Knowledge Management |
 
 ---
 
