@@ -6,7 +6,8 @@ description: >-
 remote_theme: just-the-docs/just-the-docs@v0.10.0
 
 url: https://tosin2013.github.io
-baseurl: /ansible-aap-skills-cli
+# baseurl is injected automatically by actions/configure-pages at build time.
+# For local preview use docs/_config.local.yml which sets baseurl: ""
 
 # Navigation
 nav_enabled: true
@@ -40,4 +41,5 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - "*.gemspec"
+  - _config.local.yml
   - vendor/

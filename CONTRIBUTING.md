@@ -179,6 +179,59 @@ Before opening a PR, verify:
 
 ---
 
+## Local Documentation Preview
+
+The documentation site uses [Jekyll](https://jekyllrb.com/) with the
+[just-the-docs](https://just-the-docs.github.io/just-the-docs/) theme.
+You can preview it locally before pushing.
+
+### Prerequisites
+
+Install Ruby and Bundler:
+
+```bash
+# RHEL / Fedora
+sudo dnf install ruby ruby-devel
+
+# Debian / Ubuntu
+sudo apt-get install ruby-full
+
+# macOS
+brew install ruby
+```
+
+### Serve the site locally
+
+```bash
+cd docs
+gem install bundler
+bundle install
+
+# Preview with correct local URLs (baseurl overridden to "")
+bundle exec jekyll serve --config _config.yml,_config.local.yml --livereload
+```
+
+Open [http://localhost:4000](http://localhost:4000) in your browser.
+The `--livereload` flag automatically refreshes the browser when you save a file.
+
+### Why two config files?
+
+The production site runs at `https://tosin2013.github.io/ansible-aap-skills-cli/`
+(baseurl = `/ansible-aap-skills-cli`). Locally, Jekyll serves from the root, so links
+break unless `baseurl` is overridden to `""`. The `_config.local.yml` file does this
+and is excluded from the production build.
+
+### Build only (no serve)
+
+```bash
+cd docs
+bundle exec jekyll build --destination ../_site
+```
+
+The rendered HTML will be in `_site/` at the repository root.
+
+---
+
 ## Architecture
 
 All architectural decisions are documented as ADRs in [`docs/adrs/`](docs/adrs/).
