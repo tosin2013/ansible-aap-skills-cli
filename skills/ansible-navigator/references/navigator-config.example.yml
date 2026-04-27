@@ -1,0 +1,71 @@
+# ansible-navigator.yml — fully annotated example
+# Place this file at the repository root.
+# Last updated: 2026-04-27
+
+---
+ansible-navigator:
+
+  # ── Execution Environment ─────────────────────────────────────────────────
+  execution-environment:
+    enabled: true
+
+    # For a locally built image (after `CONTAINER_ENGINE=podman make build`):
+    #   image: localhost/my-ee:latest
+    #   pull:
+    #     policy: never
+    #
+    # For a registry image:
+    #   image: quay.io/myorg/my-ee:latest
+    #   pull:
+    #     policy: missing   # pull only if not present locally (fast)
+    #     policy: always    # always pull (CI / ensure latest)
+    image: localhost/ansible-execution-environment:latest
+    pull:
+      policy: missing
+
+    # Volume mounts — expose local files inside the container.
+    # The playbook directory is mounted automatically; add extras here.
+    # volume-mounts:
+    #   - src: /home/user/.vault_pass
+    #     dest: /home/runner/.vault_pass
+    #     options: "z"        # SELinux label for RHEL/Fedora hosts
+
+    # Container options — passed directly to podman/docker run
+    # container-options:
+    #   - "--net=host"        # use host network (needed for some AAP connectivity scenarios)
+
+  # ── Execution Mode ────────────────────────────────────────────────────────
+  # stdout  = line-by-line output, non-interactive (required for CI)
+  # interactive = TUI with task navigation (local development only)
+  mode: stdout
+
+  # ── Ansible settings ─────────────────────────────────────────────────────
+  ansible:
+    # Extra command-line args appended to every ansible-playbook call.
+    # Use for vault password file, extra vars, or inventory.
+    # cmdline: "--vault-password-file ~/.vault_pass -i inventory/"
+
+    # Inventories to use (overridden by -i on the command line)
+    # inventories:
+    #   - inventory/
+
+  # ── Logging ───────────────────────────────────────────────────────────────
+  logging:
+    level: warning    # critical | error | warning | info | debug
+    # append: true    # append to log file on successive runs
+
+  # ── Playbook Artifacts ───────────────────────────────────────────────────
+  # Artifacts capture the full task output as JSON for post-run review.
+  playbook-artifact:
+    # Set enable: true in CI so failures can be inspected.
+    # Set enable: false locally to avoid cluttering the repo root.
+    enable: false
+    # save-as: /tmp/navigator-artifact-{ts}.json
+
+  # ── Color ─────────────────────────────────────────────────────────────────
+  # Disable ANSI color codes in CI log output.
+  # color:
+  #   enable: false
+
+  # ── Time Zone ─────────────────────────────────────────────────────────────
+  # time-zone: UTC

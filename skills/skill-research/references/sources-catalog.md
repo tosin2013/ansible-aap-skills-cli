@@ -19,6 +19,8 @@ any upstream content.
 | `ee-yaml-schema` | https://ansible.readthedocs.io/projects/builder/en/latest/definition/ | EE definition reference, v3 schema | `ansible/ansible-builder` |
 | `ee-build-workflow` | https://github.com/tosin2013/ansible-execution-environment | `Makefile`, `README.md` | `tosin2013/ansible-execution-environment` |
 | `ansible-good-practices` | https://redhat-cop.github.io/automation-good-practices/ | Full guide | `redhat-cop/automation-good-practices` |
+| `ansible-navigator` | https://ansible.readthedocs.io/projects/navigator/ | Settings reference, subcommands (run, collections, exec) | `ansible/ansible-navigator` |
+| `ansible-navigator` (settings) | https://ansible.readthedocs.io/projects/navigator/settings/ | Full `ansible-navigator.yml` key reference | `ansible/ansible-navigator` |
 | `aap-live-validation` | https://docs.ansible.com/automation-controller/latest/html/controllerapi/index.html | REST API reference, `/api/v2/ping/`, token endpoints | N/A (official docs) |
 | `aap-live-validation` (navigator) | https://ansible.readthedocs.io/projects/navigator/ | `ansible-navigator run` flags, `--check`, `--mode stdout` | `ansible/ansible-navigator` |
 | `aap-live-validation` (awx collection) | https://github.com/ansible/awx/tree/devel/awx_collection | `awx.awx.controller_meta`, `awx.awx.token` modules | `ansible/awx` |

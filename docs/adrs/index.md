@@ -31,6 +31,7 @@ a permanent record of *why* the project is built the way it is.
 | [ADR-010](010-github-pages-documentation) | GitHub Pages Documentation Site | Accepted | Documentation |
 | [ADR-011](011-research-reference-maintenance) | Research and Reference Maintenance | Accepted | Knowledge Management |
 | [ADR-012](012-aap-live-validation-skill) | AAP Live Validation Skill | Accepted | Skill Development |
+| [ADR-013](013-ansible-navigator-skill) | ansible-navigator Skill | Accepted | Skill Development |
 
 ---
 
